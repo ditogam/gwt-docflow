@@ -1,0 +1,9 @@
+<DataSource ID="MBTypeDescrDS" serverType="sql" tableName="modbas.mbtype_descr"
+	dbName="DocFlow">
+	<fields>
+		<field name="id" type="integer" title="id" hidden="true" />
+		<field name="tcount" type="integer" title="name" />
+		<field name="tname" type="text" title="reg" />
+		<field name="reg" type="integer" title="type" />
+	</fields>
+</DataSource>

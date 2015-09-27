@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="BuildingCustomerDS" serverType="sql"
+	tableName="v_customer_full">
+	<fields>
+		<field name="cusid" type="integer" title="Customer ID"
+			primaryKey="true" width="100" />
+		<field name="regionid" type="integer" title="Zone" width="100" />
+		<field name="subregionid" type="integer" title="Zone" width="100" />
+		<field name="building_id" type="integer" />
+		<field name="cusname" type="text" />
+	</fields>
+	<serverObject lookupStyle="new"
+		className="com.docflow.server.db.CustomerCustomDMI" />
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch">
+			<customSQL>
+				<![CDATA[ 
+					SELECT c.cusid, cusname, pc.pcityid AS subregionid, pc.ppcityid AS regionid,c.buid AS building_id
+					   FROM maps.building_to_customers bc
+					   join customer c on bc.cusid=c.cusid
+					   join street s on s.streetid=c.streetid
+					   join city cc on cc.cityid=s.cityid
+					   JOIN pcity pc ON pc.pcityid = cc.pcityid
+					   JOIN ppcity ppc ON ppc.ppcityid = pc.ppcityid
+					   JOIN customer_scope sc ON c.scope_id = sc.id
+				]]>
+			</customSQL>
+
+		</operationBinding>
+
+
+
+	</operationBindings>
+</DataSource>

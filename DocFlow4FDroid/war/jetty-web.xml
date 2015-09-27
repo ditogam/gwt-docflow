@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+<Configure class="org.mortbay.jetty.webapp.WebAppContext">
+	<New id="Gass" class="org.mortbay.jetty.plus.naming.Resource">
+
+		<Arg>java:jdbc/callsql</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+				<Set name="driverClassName">org.postgresql.Driver</Set>
+				<Set name="url">jdbc:postgresql://localhost:9996/gass</Set>
+				<Set name="username">gass</Set>
+				<Set name="password">gilelumimani</Set>
+				<Set name="validationQuery">SELECT 1</Set>
+			</New>
+		</Arg>
+	</New>
+
+
+
+	<New id="DocFlow" class="org.mortbay.jetty.plus.naming.Resource">
+
+		<Arg>java:jdbc/docflow</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+				<Set name="driverClassName">org.postgresql.Driver</Set>
+				<Set name="url">jdbc:postgresql://localhost:54325/docflow</Set>
+				<Set name="username">gass</Set>
+				<Set name="password">gilelumimani</Set>
+				<Set name="validationQuery">SELECT 1</Set>
+			</New>
+		</Arg>
+	</New>
+
+
+	<New id="MAP" class="org.mortbay.jetty.plus.naming.Resource">
+
+		<Arg>java:jdbc/map</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+				<Set name="driverClassName">org.postgresql.Driver</Set>
+				<Set name="url">jdbc:postgresql://localhost:54325/socargass</Set>
+				<Set name="username">gass</Set>
+				<Set name="password">gilelumimani</Set>
+				<Set name="validationQuery">SELECT 1</Set>
+			</New>
+		</Arg>
+	</New>
+</Configure>

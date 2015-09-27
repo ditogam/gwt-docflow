@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="ZoneDS" serverType="sql" tableName="v_customer_full">
+	<fields>
+		<field name="zone" type="double" title="ID" primaryKey="true"
+			hidden="true" />
+	</fields>
+
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch" customFields="zone">
+			<selectClause> <![CDATA[ 
+				distinct zone ]]>
+			</selectClause>
+			<tableClause>
+				v_customer_full
+			</tableClause>
+			<whereClause>
+				<![CDATA[
+					#if($criteria.regionid)
+						(regionid=$criteria.regionid)
+						and
+					#end
+					#if($criteria.subregionid)
+						($criteria.subregionid<0 or subregionid=$criteria.subregionid)
+						and
+					#end
+					#if($criteria.cityid)
+						($criteria.cityid<0 or cityid=$criteria.cityid)
+						and
+					#end
+					#if($criteria.streetid)
+						($criteria.streetid<0 or streetid=$criteria.streetid)
+						and
+					#end
+					#if($criteria.block)
+						($criteria.block<0 or zone::character varying like '%'||$criteria.block)
+						and
+					#end
+					cusstatusid=1
+				]]>
+			</whereClause>
+			<orderClause>zone</orderClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

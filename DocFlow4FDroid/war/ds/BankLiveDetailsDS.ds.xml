@@ -1,0 +1,53 @@
+<DataSource ID="BankLiveDetailsDS" serverType="sql"
+	tableName="v_banklive_details">
+	<fields>
+		<field name="btransid" type="integer" title="Bank Transactionid"
+			primaryKey="true" />
+		<field name="banktime" type="datetime" title="Bank Time" />
+		<field name="realtime" type="datetime" title="Real Time" />
+		<field name="cusid" type="integer" title="Customer ID" />
+		<field name="cusname" type="text" title="Customer Name" />
+		<field name="phone" type="text" title="Phone" />
+		<field name="streetname" type="text" title="Street" />
+		<field name="cityname" type="text" title="City" />
+		<field name="pcityname" type="text" title="Subregion" />
+		<field name="amount" type="double" title="amount" />
+		<field name="bname" type="text" title="Bank Name" />
+		<field name="bankid" type="integer" title="bankid" hidden="true" />
+		<field name="custypeid" type="integer" title="custypeid" hidden="true" />
+		<field name="ppcityid" type="integer" title="ppcityid" hidden="true" />
+	</fields>
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="btransid,banktime,realtime,cusid,cusname,phone,streetname,cityname,pcityname,amount,bname,bankid,custypeid,ppcityid">
+			<selectClause> <![CDATA[ 
+				btransid,banktime,realtime,cusid,cusname,phone,streetname,
+				cityname,pcityname,amount,bname,bankid,custypeid,ppcityid ]]>
+			</selectClause>
+			<tableClause>
+				v_banklive_details
+			</tableClause>
+			<whereClause>
+                              <![CDATA[ 
+                              banktime>=$criteria.diStart
+                              and
+                              banktime<$criteria.diEnd
+                              and 
+                              bankid=$criteria.bankid
+                              #if($criteria.custypeid)
+                               	and ($criteria.custypeid<0 or custypeid=$criteria.custypeid)
+                              #end
+                              #if($criteria.siRegion) 
+                              	and
+                              	($criteria.siRegion<0 or ppcityid=$criteria.siRegion)
+                              #end
+                               #if($criteria.cusid)
+                               	and (''||cusid like  $criteria.cusid||'%')
+                              #end
+                              ]]>
+			</whereClause>
+			<orderClause>banktime,cusname</orderClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

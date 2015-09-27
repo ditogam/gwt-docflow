@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<!-- SpringSecurity -->
+	<http entry-point-ref="authenticationEntryPoint">
+		<custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencyFilter" />
+		<custom-filter position="FORM_LOGIN_FILTER" ref="formLoginFilter" />
+		<anonymous enabled="false" />
+		<intercept-url pattern="/workflow/isomorphic/IDACall/*" access="ROLE_USER" />
+		<access-denied-handler ref="accessDeniedHandler" />
+		<session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+		<security:logout invalidate-session="true" logout-url="/j_spring_security_logout"/>
+	</http>
+
+	<beans:bean id="customAuthenticationProvider" class="com.workflow.server.authentication.CustomAuthenticationProvider" />
+
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider ref="customAuthenticationProvider">
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+
+	<beans:bean id="formLoginFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<beans:property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationSuccessHandler">
+			<beans:bean class="com.workflow.server.authentication.WorkFlowAuthenticationSuccessHandler" />
+		</beans:property>
+		<beans:property name="authenticationFailureHandler">
+			<beans:bean class="com.workflow.server.authentication.WorkFlowAuthenticationFailureHandler" />
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="authenticationEntryPoint" class="com.workflow.server.authentication.WorkFlowAuthenticationEntryPoint" />
+	<beans:bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+		<beans:property name="errorPage" value="/accessDenied.htm" />
+	</beans:bean>
+
+	<beans:bean id="concurrencyFilter" class="com.workflow.server.authentication.WorkFlowConcurrentSessionFilter">
+		<beans:property name="sessionRegistry" ref="sessionRegistry" />
+		<beans:property name="invalidSessionHandler">
+			<beans:bean class="com.workflow.server.authentication.WorkFlowInvalidSessionHandler" />
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="sessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+		<beans:constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+		<beans:property name="maximumSessions" value="1" />
+	</beans:bean>
+
+	<beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+</beans:beans>

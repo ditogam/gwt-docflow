@@ -1,0 +1,78 @@
+<DataSource ID="MeterDeviceResultDS" serverType="sql"
+	tableName="corectors.v_meter_device" dbName="MAP">
+
+	<fields>
+		<field name="data_date" type="datetime" title="Server Name" />
+		<field name="meter_device_id" type="integer" title="Host(ip)"
+			width="120" />
+		<field name="id" type="integer" title="Server Name" />
+		<field name="val_type" type="integer" title="Server Name" />
+		<field name="default_val" type="default_val" title="Server Name" />
+		<field name="values" type="text" title="Port" />
+	</fields>
+
+	<operationBindings>
+		<!-- FETCH -->
+
+		<operationBinding operationType="fetch" operationId="getAllDataTypes">
+			<customSQL>
+				select id, data_name as values,val_type,default_val from corectors.data_types
+				where val_type is not null
+			</customSQL>
+		</operationBinding>
+
+		
+		<operationBinding operationType="fetch" operationId="getDataTypesForType">
+			<customSQL>
+				select t.id, t.data_name as values from corectors.data_types t
+				inner join corectors.data_type_dim dm on dm.id=$criteria.type_id and t.id between dm.min_value and dm.max_value
+				order by 1
+			</customSQL>
+		</operationBinding>
+		
+		<operationBinding operationType="fetch" operationId="getDataTypes">
+			<customSQL>
+				select t.id, t.name as values from corectors.data_type_dim t
+				order by 1
+			</customSQL>
+		</operationBinding>
+		
+		<operationBinding operationType="fetch">
+			<customSQL>
+			     <![CDATA[ 
+						SELECT data_date, 
+						       meter_device_id, 
+						       values 
+						FROM   (SELECT d2.data_date, 
+						               d2.meter_device_id, 
+						               Array_to_string(Array_agg(data_id||'::'||d2.data_value), '&') AS VALUES 
+						        FROM   (SELECT data_date, 
+						                       meter_device_id, 
+						                       data_value, 
+						                       doc_date,
+						                       data_id  
+						                FROM   corectors.meter_device_data mdd 
+						                WHERE data_id in (-1
+						                    #if($criteria.types)
+												#foreach( $type in $criteria.types.split(",") )
+																	,
+																	$type
+																	
+												#end
+											#end
+											)  
+						                       AND data_date >= $criteria.startdate
+						                       AND data_date < $criteria.enddate 
+						                       AND meter_device_id = $criteria.meter_device_id 
+						                ORDER  BY meter_device_id, 
+						                          data_date, 
+						                          data_id) d2 
+						        GROUP  BY meter_device_id, 
+						                  data_date) q 
+						ORDER  BY meter_device_id, 
+						          data_date 
+                   ]]>
+			</customSQL>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

@@ -1,0 +1,43 @@
+<DataSource dropExtraFields="false" ID="HierarchyDS"
+	serverType="sql" tableName="hierarchy">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			sequenceName="hierarchy_id_seq" width="50" />
+		<field name="isFolder" type="boolean" title="ID"
+			customSelectExpression="haschildren(hierarchy_type_id,hierarchy_sub_type_id)" />
+		<field name="caption_id" title="Caption" type="integer" />
+		<field name="name" title="Caption" type="text"
+			customSelectExpression="getcaption(caption_id,$session.language_id)"
+			customCriteriaExpression="id in (WITH RECURSIVE included_parts(id, caption_id, parent_id) AS (
+					    select h.id,h.caption_id,h.parent_id
+					    from hierarchy h 
+					    inner join captions c on c.id=h.caption_id and language_id=$session.language_id and cvalue like $criteria.name||'%'
+					  UNION ALL
+					    select h.id,h.caption_id,h.parent_id
+					    FROM included_parts pr, hierarchy h
+					    WHERE h.id = pr.parent_id
+					  )
+					select id from included_parts)" />
+		<field name="descript" title="Description" type="text" width="200"
+			editorType="TextAreaItem" />
+		<field name="external_id" title="External id" type="integer"
+			width="150" />
+		<field name="hierarchy_type_id" title="Hierarchy type" type="integer"
+			width="150" hidden="true" />
+		<field name="parent_id" title="Hierarchy type" type="integer"
+			width="150" hidden="true" foreignKey="id"
+			customCriteriaExpression="#if($criteria.name)  1=1 #else #if($criteria.parent_id)  parent_id=$criteria.parent_id #else  parent_id is null #end #end" />
+		<field name="hierarchy_sub_type_id" title="Hierarchy type" type="integer"
+			width="150" hidden="true" />
+		<field name="icon" title="Picture" type="image" imageURLPrefix="getimage.jsp?id="
+			imageURLSuffix="" width="150"
+			customSelectExpression="'getimage.jsp?id='||getimageidforhirarchy(hierarchy_type_id,hierarchy_sub_type_id)" />
+	</fields>
+	<operationBindings>
+		<operationBinding operationType="fetch" operationId="fetchWithIds">
+			<whereClause>
+                	(id =ANY (string_to_array($criteria.ids,',')::bigint[]))
+			</whereClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

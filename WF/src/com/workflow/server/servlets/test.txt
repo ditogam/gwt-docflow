@@ -1,0 +1,58 @@
+
+isc.DynamicForm.create({
+    ID:"DynamicForm1612",
+    autoDraw:false,
+    caption_id:"14",
+    groupTitle:"?????????????",
+    isGroup:true,
+    value_manager_group:"fff",
+    fields:[
+        {
+            name:"DependencySelectItem0",
+            _constructor:"DependencySelectItem"
+        },
+        {
+            name:"dito",
+            title:"sfsfd",
+            defaultValue:"",
+            valueMap:[
+            ],
+            value:"",
+            _constructor:"ComboBoxItem"
+        },
+        {
+            caption_id:"9",
+            name:"kkkk",
+            defaultValue:"d",
+            change:"alert(this.name)",
+            _constructor:"TextItem"
+        }
+    ]
+})
+
+
+
+isc.HLayout.create({
+    ID:"HLayout0",
+    autoDraw:false,
+    members:[
+        DynamicForm1612
+    ]
+})
+
+
+
+isc.DataView.create({
+    ID:"DataView0",
+    autoDraw:true,
+    height:"100%",
+    overflow:"hidden",
+    width:"100%",
+    members:[
+        HLayout0
+    ],
+    modulesDir:"modules/",
+    minMemberSize:"18"
+})
+
+

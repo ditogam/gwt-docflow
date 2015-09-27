@@ -1,0 +1,42 @@
+<DataSource ID="JobPositionDS" serverType="sql" tableName="job_position"
+	dbName="HR">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" />
+		<field name="structure_id" type="integer" title="Name111" />
+		<field name="person_id" type="integer" title="Name111" />
+		<field name="position_name_id" type="integer" title="Name111" />
+		<field name="position_description_id" type="integer" title="Name111" />
+		<field name="position_name" type="text" title="ID" />
+		<field name="position_description" type="text" title="ID" />
+	</fields>
+
+
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="id,structure_id,person_id,position_name_id,position_description_id,position_name,position_description">
+			<selectClause> <![CDATA[ 
+				id,structure_id,person_id,position_name_id,position_description_id,getcaption(COALESCE(position_name_id,-1),]]><![CDATA[ 
+					#if($criteria.language_id)
+						$criteria.language_id
+					#elseif($values.language_id)
+						$values.language_id
+					#end
+				]]>
+				<![CDATA[-0,position_name) position_name,getcaption(COALESCE(position_description_id,-1),]]><![CDATA[ 
+					#if($criteria.language_id)
+						$criteria.language_id
+					#elseif($values.language_id)
+						$values.language_id
+					#end
+				]]>
+				<![CDATA[-0,position_description) position_description ]]>
+			</selectClause>
+			<tableClause>
+				job_position
+			</tableClause>
+		</operationBinding>
+	</operationBindings>
+
+</DataSource>

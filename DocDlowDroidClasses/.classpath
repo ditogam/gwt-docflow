@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry excluding="com/common/client/|com/common/db/" kind="src" path="common"/>
+	<classpathentry kind="src" path="gwt"/>
+	<classpathentry excluding="com/docflow/server/**|com/docflow/shared/DocFlowSerializer.java" including="com/docflow/client/DocFlowService.java|com/docflow/shared/**" kind="src" path="docflow"/>
+	<classpathentry kind="src" path="doflowandroid"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

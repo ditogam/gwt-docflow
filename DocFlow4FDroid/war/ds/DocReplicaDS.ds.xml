@@ -1,0 +1,35 @@
+<DataSource ID="DocReplicaDS" serverType="sql"
+	tableName="document_hist" dbName="DocFlow">
+	<fields>
+		<field name="hist_id" type="sequence" title="id" hidden="true"
+			primaryKey="true" sequenceName="document_hist_hist_id_seq"/>
+		<field name="doc_id" type="integer" title="Port" width="50" align="center"/>
+		<field name="hist_time" type="datetime" title="Attempt time(Hour)" width="120"/>
+		<field name="old_status_id" type="integer" title="Port" width="50" align="center"/>
+		<field name="old_status" type="text" title="Server Name" />
+		<field name="new_status_id" type="integer" title="Port" width="50" align="center"/>
+		<field name="new_status" type="text" title="Server Name" />
+		<field name="user_id" type="integer" title="Port" width="50" align="center"/>
+		<field name="user_name" type="text" title="Server Name" />
+		<field name="replica" type="text" title="Server Name" />
+	</fields>
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch">
+			<customSQL>
+				select h.hist_id,h.doc_id,h.hist_time,
+				h.old_status_id,oldst.docstatuscaptionvalue old_status,
+				h.new_status_id,newst.docstatuscaptionvalue
+				new_status,h.user_id,h.replica,u.user_name
+				from document_hist h
+				inner join doc_system_status_v newst on newst.id=h.new_status_id and
+				newst.statuslang=$criteria.lang_id
+				left join doc_status_v oldst on oldst.id=h.old_status_id and
+				oldst.statuslang=$criteria.lang_id
+				inner join susers u on u.id=h.user_id
+				where h.doc_id=$criteria.doc_id
+				order by h.hist_time desc
+			</customSQL>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

@@ -1,0 +1,290 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+	<!-- Android Settings -->
+
+	<servlet>
+		<servlet-name>XDocFlowService</servlet-name>
+		<servlet-class>com.docflow.server.WDocFlowANDServer</servlet-class>
+		<init-param>
+			<param-name>exposedInterfaces</param-name>
+			<param-value>com.docflow.client.DocFlowService</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>XDocFlowService</servlet-name>
+		<url-pattern>/XDocFlowService</url-pattern>
+	</servlet-mapping>
+
+
+
+
+
+	<servlet>
+		<servlet-name>MyIsomorphicInit</servlet-name>
+		<servlet-class>com.docflow.server.MyIsomorphicInit</servlet-class>
+		<load-on-startup>5</load-on-startup>
+	</servlet>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>context</servlet-name>
+		<servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>docflow</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+
+	<servlet>
+		<servlet-name>MyFileServlet</servlet-name>
+		<servlet-class>com.docflow.server.db.MyFileServlet</servlet-class>
+	</servlet>
+
+	<filter>
+		<filter-name>gwtCacheControlFilter</filter-name>
+		<filter-class>com.docflow.server.GWTCacheControlFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>gwtCacheControlFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<servlet>
+		<servlet-name>docflowServlet</servlet-name>
+		<servlet-class>com.docflow.server.DocFlowServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>docflowServlet</servlet-name>
+		<url-pattern>/docflow/docflow</url-pattern>
+	</servlet-mapping>
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>DocFlow.html</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>Index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>Index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<resource-ref>
+		<res-ref-name>jdbc/callsql</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+
+
+	<resource-ref>
+		<res-ref-name>jdbc/docflow</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+	<resource-ref>
+		<res-ref-name>jdbc/map</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+
+	<resource-ref>
+		<res-ref-name>jdbc/hr</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+
+	<servlet>
+		<servlet-name>fileDownload</servlet-name>
+		<servlet-class>com.docflow.server.FileDownload</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>fileDownload</servlet-name>
+		<url-pattern>/fileDownload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>fileDownload</servlet-name>
+		<url-pattern>/docflow/fileDownload</url-pattern>
+	</servlet-mapping>
+
+
+
+	<!-- //>FileLoader -->
+	<!-- Dynamic Compression -->
+	<filter>
+		<filter-name>CompressionFilter</filter-name>
+		<filter-class>com.isomorphic.servlet.CompressionFilter</filter-class>
+	</filter>
+	<!-- CompressionFilter for dynamic compression -->
+	<filter-mapping>
+		<filter-name>CompressionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- //<FileLoader -->
+
+
+	<!-- The IDACall servlet handles all Built-in DataSource operations -->
+	<servlet>
+		<servlet-name>IDACall</servlet-name>
+		<servlet-class>com.isomorphic.servlet.IDACall</servlet-class>
+	</servlet>
+
+	<!-- The RESTHandler servlet is like IDACall, but for REST requests -->
+	<servlet>
+		<servlet-name>RESTHandler</servlet-name>
+		<servlet-class>com.isomorphic.servlet.RESTHandler</servlet-class>
+	</servlet>
+
+	<!-- The DataSourceLoader servlet returns Javascript representations of 
+		the dataSources whose ID's are passed to it - it is an alternative to using 
+		the <loadDS> JSP tag -->
+	<servlet>
+		<servlet-name>DataSourceLoader</servlet-name>
+		<servlet-class>com.isomorphic.servlet.DataSourceLoader</servlet-class>
+	</servlet>
+
+	<!-- The screenLoader servlet loads screen definitions in javascript notation -->
+	<servlet>
+		<servlet-name>screenLoader</servlet-name>
+		<servlet-class>com.isomorphic.servlet.ScreenLoaderServlet</servlet-class>
+	</servlet>
+
+	<!-- The FileDownload servlet downloads static files, like a webserver -->
+	<servlet>
+		<servlet-name>FileDownload</servlet-name>
+		<servlet-class>com.isomorphic.servlet.FileDownload</servlet-class>
+	</servlet>
+
+	<!-- ISC init: initializes ISC framework -->
+	<servlet>
+		<servlet-name>Init</servlet-name>
+		<servlet-class>com.isomorphic.base.Init</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>HttpProxy</servlet-name>
+		<servlet-class>com.isomorphic.servlet.HttpProxyServlet</servlet-class>
+	</servlet>
+
+	<!-- Messaging servlet for realtime messaging subsystem -->
+	<servlet>
+		<servlet-name>MessagingServlet</servlet-name>
+		<servlet-class>com.isomorphic.messaging.MessagingServlet</servlet-class>
+	</servlet>
+
+
+	<!-- The PreCache servlet initializes when the servlet engine starts up 
+		and pre-loads data need for all client requests. This is optional, and improves 
+		performance of the first few page requests. PreCache cannot be invoked by 
+		a browser, because there is no "servlet-mapping" defined for it. -->
+
+	<!-- PreCache is disabled by default because of an issue when debugging 
+		the project for the first time. However, it can be safely enabled when compiling 
+		with the GWT compiler prior to deployment. See the README.txt for more information. -->
+
+	<!-- <servlet> <servlet-name>PreCache</servlet-name> <servlet-class>com.isomorphic.servlet.PreCache</servlet-class> 
+		<load-on-startup>2</load-on-startup> </servlet> -->
+
+	<servlet-mapping>
+		<servlet-name>docflow</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	<!-- RPCManager uses this URL by default for Built-in DataSource operations -->
+	<servlet-mapping>
+		<servlet-name>IDACall</servlet-name>
+		<url-pattern>/docflow/sc/IDACall/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>RESTHandler</servlet-name>
+		<url-pattern>/docflow/sc/RESTHandler/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- DataSourceLoader requests -->
+	<servlet-mapping>
+		<servlet-name>DataSourceLoader</servlet-name>
+		<url-pattern>/sc/DataSourceLoader</url-pattern>
+	</servlet-mapping>
+
+	<!-- The screenLoader servlet loads screen definitions in javascript notation -->
+	<servlet-mapping>
+		<servlet-name>screenLoader</servlet-name>
+		<url-pattern>/docflow/sc/screenLoader</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>HttpProxy</servlet-name>
+		<url-pattern>/docflow/sc/HttpProxy/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- Use FileDownload servlet to download all static content that's part 
+		of the skin, such as image files, so we can set Expires headers and other 
+		cache control directives. In a production deployment, you'd want to use a 
+		webserver such as Apache to do this. -->
+	<servlet-mapping>
+		<servlet-name>FileDownload</servlet-name>
+		<url-pattern>/docflow/sc/skins/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- serve ISC modules compressed, with expires headers -->
+	<servlet-mapping>
+		<servlet-name>FileDownload</servlet-name>
+		<url-pattern>/docflow/sc/system/modules/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- serve ISC development modules compressed, with expires headers -->
+	<servlet-mapping>
+		<servlet-name>FileDownload</servlet-name>
+		<url-pattern>/docflow/sc/system/development/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- server skin assets with expires headers -->
+	<servlet-mapping>
+		<servlet-name>FileDownload</servlet-name>
+		<url-pattern>/docflow/sc/system/reference/skin/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- messaging servlet mapping -->
+	<servlet-mapping>
+		<servlet-name>MessagingServlet</servlet-name>
+		<url-pattern>/docflow/sc/messaging/*</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- General config -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<jsp-config>
+		<!-- Isomorphic JSP tags -->
+		<taglib>
+			<taglib-uri>isomorphic</taglib-uri>
+			<taglib-location>/WEB-INF/iscTaglib.xml</taglib-location>
+		</taglib>
+	</jsp-config>
+
+	<mime-mapping>
+		<extension>csv</extension>
+		<mime-type>text/csv</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>manifest</extension>
+		<mime-type>text/cache-manifest</mime-type>
+	</mime-mapping>
+
+</web-app>

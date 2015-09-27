@@ -1,0 +1,11 @@
+<DataSource dropExtraFields="false" ID="ImageDBDS"
+	serverType="sql" tableName="file_tmp_storadge" dbName="DocFlow">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" sequenceName="file_tmp_storadge_id_seq" />
+		<field name="filedata" title="სურათი" type="imageFile"
+			showFileInline="true" />
+	</fields>
+
+
+</DataSource>

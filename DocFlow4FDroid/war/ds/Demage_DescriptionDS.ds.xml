@@ -1,0 +1,74 @@
+<DataSource ID="Demage_DescriptionDS" dbName="MAP"
+	dropExtraFields="false" serverType="sql" tableName="buildings">
+
+	<fields>
+
+		<field name="buid" hidden="true" primaryKey="true" title="ID"
+			type="integer" />
+		<field name="feature_text" title="Name111" type="text" />
+		<field name="regid" title="ID" type="integer" />
+		<field name="raiid" title="ID" type="integer" />
+		<field name="srid" title="ID" type="integer" />
+		<field name="to_srid" title="ID" type="integer" />
+		<field name="cusid" title="ID" type="integer" />
+
+		<field name="corector_id" title="ID" type="integer" />
+
+		<field name="street" title="street" type="text" />
+
+		<field name="map_object_type" title="street" type="integer" />
+
+		<field name="senobis_no" title="street" type="text" />
+
+		<field name="sartuliano" title="street" type="integer" />
+	</fields>
+
+	
+
+	<operationBindings>
+
+	
+
+
+		<operationBinding 
+			operationType="fetch">
+			<customSQL>
+			select dd.id,t1.pcityid,t1.ppcityid,t1.pcityname,ppcityname,username,demage_type_name,rectime,demage_time,astext(transform(the_geom,$criteria.to_srid)) feature_text
+ 				from demage_description dd
+ 				left join demage_type dt on dt.demage_type_id=dd.demage_type
+				 left  join dblink('hostaddr=10.90.200.10 dbname=gass user=gass password=gilelumimani'::text, 'select pcityname, ppcityname,pcityid,pc.ppcityid from pcity pc 
+			inner join ppcity ppc on pc.ppcityid= ppc.ppcityid'::text) t1 (pcityname character varying, ppcityname character varying, pcityid integer, ppcityid integer)  on t1.pcityid=dd.pcityid
+			left  join dblink('hostaddr=10.90.200.10 dbname=gass user=gass password=gilelumimani'::text, 'select username, userid from users u '::text) t2 (username character varying, userid integer)  on t2.userid=dd.user_id
+			where  date_trunc('days',demage_time)=date_trunc('days',$criteria.demage_time::date)
+			#if($criteria.demage_type)
+						and
+						(dd.demage_type=$criteria.demage_type)
+			#end
+			#if($criteria.pcityid)
+						and
+						(dd.pcityid=$criteria.pcityid)
+			#end
+			</customSQL>
+		</operationBinding>
+
+			<operationBinding  operationId="getCalendar"
+			operationType="fetch">
+			<customSQL>
+			select date_trunc('days',demage_time) demage_time, count(1) cnt
+			 	from demage_description dd
+			 where  date_trunc('days',demage_time) between  date_trunc('days',$criteria.demage_time_start::date) and date_trunc('days',$criteria.demage_time_end::date)
+			
+			#if($criteria.demage_type)
+						and
+						(dd.demage_type=$criteria.demage_type)
+			#end
+			#if($criteria.pcityid)
+						and
+						(dd.pcityid=$criteria.pcityid)
+			#end
+			 group by date_trunc('days',demage_time)
+			</customSQL>
+		</operationBinding>
+	</operationBindings>
+
+</DataSource>

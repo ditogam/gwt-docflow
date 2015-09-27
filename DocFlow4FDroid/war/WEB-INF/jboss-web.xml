@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web>
+	<security-domain flushOnSessionInvalidation="false" />
+	<resource-ref>
+		<res-ref-name>jdbc/map</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<jndi-name>java:jdbc/map</jndi-name>
+	</resource-ref>
+	<resource-ref>
+		<res-ref-name>jdbc/docflow</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<jndi-name>java:jdbc/docflow</jndi-name>
+	</resource-ref>
+	<resource-ref>
+		<res-ref-name>jdbc/callsql</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<jndi-name>java:jdbc/callsql</jndi-name>
+	</resource-ref>
+	<resource-ref>
+		<res-ref-name>jdbc/hr</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<jndi-name>java:jdbc/hr</jndi-name>
+	</resource-ref>
+</jboss-web>

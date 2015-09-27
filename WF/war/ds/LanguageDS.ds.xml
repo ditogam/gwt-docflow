@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="LanguageDS" serverType="sql" tableName="wflanguage">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" sequenceName="wflanguage_id_seq" />
+		<field name="language_name" type="text" title="Language" />
+		<field name="img_Id" type="integer" title="IMG" width="50" />
+	</fields>
+	<operationBindings>
+		<operationBinding operationType="fetch">
+			<orderClause>id</orderClause>
+		</operationBinding>
+		<operationBinding operationType="fetch" operationId="fetchWithIcons">
+			<customSQL>
+			<![CDATA[
+				select id,'<table style=" border:0; font-size:1em;"><tr><td><img src="images/getimage.jsp?id='||img_id||'" alt="Pipelines"></td><td nowrap>'||language_name||'</td></tr></table>' language_name from   wflanguage
+				order by 1   ]]>
+			</customSQL>
+		</operationBinding>
+
+
+
+
+		<operationBinding operationType="fetch" operationId="updatelanguageid">
+			<serverObject className="com.workflow.server.dmi.LanguageDMI"
+				lookupStyle="new" />
+			<serverMethod>updatelanguageid</serverMethod>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

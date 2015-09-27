@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="Responcibility_TypeDS" serverType="sql"
+	tableName="responcibility_types" dbName="HR">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" />
+		<field name="resp_type_name_id" type="integer" title="Name111" />
+		<field name="resp_type_name" type="text" title="Name111" />
+
+	</fields>
+
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="id,resp_type_name_id,resp_type_name">
+			<selectClause> <![CDATA[ 
+				id,resp_type_name_id,getcaption(COALESCE(resp_type_name_id,-1),]]>
+				<![CDATA[ 
+					#if($criteria.language_id)
+						$criteria.language_id
+					#elseif($values.language_id)
+						$values.language_id
+					#end
+				]]>
+				<![CDATA[-0,resp_type_name) resp_type_name ]]>
+			</selectClause>
+			<tableClause>
+				responcibility_types
+			</tableClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

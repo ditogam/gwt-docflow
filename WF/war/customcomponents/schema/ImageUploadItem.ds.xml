@@ -1,0 +1,7 @@
+<DataSource ID="ImageUploadItem" inheritsFrom="CanvasItem"
+	Constructor="ImageUploadItem">
+	<fields>
+		<field name="actionUrl" xmlAttribute="true" type="text"
+			defaultValue="jsp/FileUpload.jsp" basic="true" group="basics" />
+	</fields>
+</DataSource>

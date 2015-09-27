@@ -1,0 +1,13 @@
+<DataSource ID="MBObjecDS" serverType="sql" tableName="modbas.mbobject"
+	dbName="DocFlow">
+	<fields>
+		<field name="id" type="integer" title="id" hidden="true" />
+		<field name="name" type="text" title="name" />
+		<field name="reg" type="integer" title="reg" />
+		<field name="type" type="integer" title="type" />
+		<field name="rw" type="text" title="rw" />
+		<field name="len" type="integer" title="len" />
+		<field name="value" type="text" title="value" />
+		<field name="device_type_id" type="integer" title="device_type_id" hidden="true"/>
+	</fields>
+</DataSource>

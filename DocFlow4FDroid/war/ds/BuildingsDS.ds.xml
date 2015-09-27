@@ -1,0 +1,431 @@
+<DataSource ID="BuildingsDS" dbName="MAP" dropExtraFields="false"
+	serverType="sql" tableName="buildings">
+
+	<fields>
+
+		<field name="buid" hidden="true" primaryKey="true" title="ID"
+			type="integer" />
+		<field name="feature_text" title="Name111" type="text" />
+		<field name="regid" title="ID" type="integer" />
+		<field name="raiid" title="ID" type="integer" />
+		<field name="srid" title="ID" type="integer" />
+		<field name="to_srid" title="ID" type="integer" />
+		<field name="cusid" title="ID" type="integer" />
+
+		<field name="corector_id" title="ID" type="integer" />
+
+		<field name="street" title="street" type="text" />
+
+		<field name="map_object_type" title="street" type="integer" />
+
+		<field name="senobis_no" title="street" type="text" />
+
+		<field name="sartuliano" title="street" type="integer" />
+	</fields>
+
+	<serverObject className="com.docflow.server.db.map.BuildingDMI"
+		lookupStyle="new" />
+
+	<operationBindings>
+
+		<operationBinding operationId="fetchCustSearchResult"
+			operationType="fetch" serverMethod="fetchCustSearchResult">
+
+			<serverObject className="com.docflow.server.db.map.BuildingDMI"
+				lookupStyle="new" />
+		</operationBinding>
+
+		<!-- FETCH -->
+
+		<operationBinding operationId="buildingsFromBound"
+			operationType="fetch">
+
+			<selectClause>
+<![CDATA[ 
+					#if($criteria.count)
+						count(1) buid, '' feature_text
+					#else
+						buid, astext(transform(the_geom,$criteria.to_srid)) feature_text
+					#end
+				]]>
+			</selectClause>
+
+			<tableClause>
+				buildings s
+			</tableClause>
+
+			<whereClause>
+<![CDATA[ 
+				intersects(s.the_geom, 
+					transform(ST_GeomFromText('POLYGON(('
+					|| $criteria.min_x ||' ' || $criteria.max_y ||', ' || $criteria.max_x ||' ' || $criteria.max_y ||', ' || $criteria.max_x ||' ' || $criteria.min_y 
+	   					||', ' || $criteria.min_x ||' ' || $criteria.min_y ||', ' || $criteria.min_x ||' ' || $criteria.max_y ||'))', $criteria.to_srid),$criteria.from_srid))
+				]]>
+			</whereClause>
+		</operationBinding>
+
+		<operationBinding operationId="buildingsWithinPolygon"
+			operationType="fetch">
+
+			<selectClause>
+<![CDATA[ 
+					#if($criteria.count)
+						count(1) buid, '' feature_text
+					#else
+						buid buid, astext(transform(the_geom,$criteria.to_srid)) feature_text
+					#end
+				]]>
+			</selectClause>
+
+			<tableClause>
+				buildings s
+			</tableClause>
+
+			<whereClause>
+<![CDATA[ 
+				intersects(s.the_geom, 
+					transform(ST_GeomFromText($criteria.polygon, $criteria.to_srid),$criteria.from_srid))
+				]]>
+			</whereClause>
+		</operationBinding>
+
+		<operationBinding operationId="mapObjectWithinPoint"
+			operationType="fetch">
+
+			<selectClause>
+<![CDATA[ 
+					#if($criteria.count)
+						count(1) buid, '' feature_text
+					#else
+						#if($criteria.map_object_type==1)
+						street,senobis_no,sartuliano,buid
+				#end
+				#if($criteria.map_object_type==2)
+					corector_id, id
+				#end buid, astext(transform(the_geom,$criteria.to_srid)) feature_text,regid,raiid, $criteria.map_object_type map_object_type,cusid
+					#end
+				]]>
+			</selectClause>
+
+			<tableClause>
+				#if($criteria.map_object_type==1)
+				buildings
+				#end
+				#if($criteria.map_object_type==2)
+				district_meters
+				#end
+				s
+			</tableClause>
+
+			<whereClause>
+<![CDATA[ 
+				ST_intersects(s.the_geom, 
+					ST_transform(ST_GeomFromText(ST_Buffer($criteria.point,5), $criteria.to_srid),$criteria.from_srid))
+				]]>
+			</whereClause>
+
+			<orderClause>
+				ST_distance(ST_Centroid(s.the_geom),
+				ST_transform(ST_GeomFromText(ST_Buffer($criteria.point,5),
+				$criteria.to_srid),$criteria.from_srid))
+				limit 1
+			</orderClause>
+		</operationBinding>
+
+		<operationBinding operationId="buildingsGetDimention"
+			operationType="fetch">
+
+			<selectClause>
+<![CDATA[ 
+					ST_AsText(ST_transform(ST_Buffer(ST_Envelope (ST_Collect(the_geom)),1000),$criteria.srid)) feature_text
+				]]>
+			</selectClause>
+
+			<tableClause>
+				buildings s
+			</tableClause>
+
+			<whereClause>
+<![CDATA[ 
+				regid=$criteria.regionid
+				and raiid in (-1
+					#foreach( $rraiid in $criteria.sub_regions.split(",") )
+										,
+										$rraiid
+										
+					#end
+				)
+				]]>
+			</whereClause>
+		</operationBinding>
+
+		<operationBinding operationId="buildingsByCriteria"
+			operationType="fetch">
+
+			<selectClause>
+<![CDATA[ 
+					ST_AsText(ST_transform(the_geom,$criteria.srid)) feature_text,
+					$criteria.cusname street
+				]]>
+			</selectClause>
+
+			<tableClause>
+				buildings s
+			</tableClause>
+
+			<whereClause>
+<![CDATA[
+				#if($criteria.regionid)
+						(regid=$criteria.regionid)
+						and
+				#end
+				#if($criteria.subregionid)
+						(raiid=$criteria.subregionid)
+						and
+				#end
+				#if($criteria.buid)
+						(buid=$criteria.buid)
+						and
+				#end
+				#if($criteria.cusid)
+						exists (select 1 from maps.building_to_customers bc where bc.cusid=$criteria.cusid and bc.building_id=s.buid)
+						and
+				#end
+				1=1
+				]]>
+			</whereClause>
+		</operationBinding>
+
+		<operationBinding operationId="buildingsGetDimention"
+			operationType="fetch">
+
+			<selectClause>
+<![CDATA[ 
+					ST_AsText(ST_transform(ST_Buffer(ST_Envelope (ST_Collect(the_geom)),1000),$criteria.srid)) feature_text
+				]]>
+			</selectClause>
+
+			<tableClause>
+				buildings s
+			</tableClause>
+
+			<whereClause>
+<![CDATA[ 
+				regid=$criteria.regionid
+				and raiid in (-1
+					#foreach( $rraiid in $criteria.sub_regions.split(",") )
+										,
+										$rraiid
+										
+					#end
+				)
+				]]>
+			</whereClause>
+		</operationBinding>
+
+		<operationBinding operationId="getBufferedPoligon"
+			operationType="fetch">
+
+			<customSQL>
+				SELECT -1 buid,region_id regid, null cusid,
+				subregion_id
+				raiid, $criteria.map_object_type map_object_type,
+				ST_AsText(ST_transform(ST_Expand
+				(ST_GeomFromText($criteria.point,$criteria.to_srid),cast(30 as float
+				)),$criteria.to_srid)) feature_text
+				from subregions s where
+				ST_intersects(s.the_geom,ST_transform(ST_Expand(ST_GeomFromText($criteria.point,$criteria.to_srid),cast(
+				#if($criteria.buffer_size)
+				$criteria.buffer_size
+				#else 30 #end as
+				float )),$criteria.from_srid))
+			</customSQL>
+		</operationBinding>
+
+		<operationBinding operationId="getBufferedPoligonNew"
+			operationType="fetch">
+
+			<customSQL>
+			    <![CDATA[
+				select xmlelement(name ObjDef, xmlattributes(-1 as oid,
+				sr.region_id as regid,sr.subregion_id as raiid,
+				-1 as cusid,gl.default_filter_type as type,xmlelement(name DocDef,
+				xmlelement(name val, xmlattributes('id' as key , -1 as value)),
+				xmlelement(name val, xmlattributes('regionId' as key , sr.region_id
+				as value)),
+				xmlelement(name val, xmlattributes('subregionId' as key , sr.subregion_id
+				as value)),
+				xmlelement(name val, xmlattributes('regid' as key , sr.region_id
+				as value)),
+				xmlelement(name val, xmlattributes('raiid' as key , sr.subregion_id as
+				value)),
+				xmlelement(name val, xmlattributes('ppcityid' as key , sr.region_id
+				as value)),
+				xmlelement(name val, xmlattributes('pcityid' as key , sr.subregion_id as
+				value))
+				)::text as xml_text,
+				astext(case when gl.map_object_type in (2,3) then
+				ST_Expand(g.geom,gl.add_buffer)
+				else g.geom end) as feature_text))::text feature_text,
+				gl.map_object_type mot
+				from (select ST_GeomFromText($criteria.point,
+				$criteria.to_srid) geom) g
+				inner join gis_layer gl on
+				gl.id=$criteria.map_object_type
+				inner join subregions sr on
+				ST_INTERSECTS(sr.the_geom,ST_TRANSFORM(g.geom,gl.srid_id))
+				order by
+				ST_DISTANCE(sr.the_geom,ST_TRANSFORM(g.geom,gl.srid_id))
+				limit 1
+				]]>
+			</customSQL>
+		</operationBinding>
+		<operationBinding operationId="getObjectsInfo"
+			operationType="fetch">
+
+			<customSQL>
+				select
+				globals.get_object_info($criteria.to_srid,$criteria.point,$criteria.filter)
+				feature_text
+			</customSQL>
+		</operationBinding>
+
+
+		<operationBinding operationId="getObjectsInfoForEdit"
+			operationType="fetch">
+
+			<customSQL>
+				select
+				globals.get_object_info($criteria.to_srid,$criteria.point,$criteria.filter,$criteria.map_object_type)
+				feature_text
+			</customSQL>
+		</operationBinding>
+
+
+
+		<operationBinding operationId="getCustomersForSelection"
+			operationType="fetch">
+
+			<customSQL>
+				select array_to_string(array_agg(bc.cusid), ';')
+				feature_text from
+				buildings b
+				inner join maps.building_to_customers bc
+				on bc.building_id=b.buid
+				where b.raiid=$criteria.subregionid and
+				ST_intersects(b.the_geom,
+				ST_transform(ST_GeomFromText($criteria.selection,
+				$criteria.to_srid),$criteria.from_srid))
+			</customSQL>
+		</operationBinding>
+
+
+		<operationBinding operationId="getTransforemed"
+			operationType="fetch">
+			<customSQL>
+				select
+				astext(ST_transform(ST_GeomFromText($criteria.point,
+				$criteria.from_srid),$criteria.to_srid) )feature_text
+
+			</customSQL>
+		</operationBinding>
+
+
+		<operationBinding operationId="getMetterInfos"
+			operationType="fetch">
+
+			<customSQL>
+			<![CDATA[ 
+			select array_to_string( array_agg(md.id||';'||dm.id||';'||md.name||';'||astext(ST_transform(the_geom,900913))), ' - ' ) feature_text from corectors.meter_device md
+				inner join district_meters dm on dm.corector_id=md.id
+				where (1=1)
+				#if($criteria.regionid)
+					and
+						(regid=$criteria.regionid)
+				#end
+				#if($criteria.subregionid)
+						and
+						(raiid=$criteria.subregionid)
+				#end]]>
+			</customSQL>
+		</operationBinding>
+
+		<operationBinding operationId="getMetters"
+			operationType="fetch">
+
+			<customSQL>
+			<![CDATA[ 
+				select  md.id buid, md.name feature_text from corectors.meter_device md
+				--inner join district_meters dm on dm.corector_id=md.id
+				where (1=1)
+				#if($criteria.regionid)
+					and
+						(ppcityid=-100)
+				#end
+				#if($criteria.subregionid)
+						and
+						(pcityid=$criteria.subregionid)
+				#end]]>
+			</customSQL>
+		</operationBinding>
+
+
+		<operationBinding operationId="getObjectPositions"
+			operationType="fetch">
+			<customSQL>
+			<![CDATA[ 
+				select  name senobis_no, feature_text from gasmonitor.v_monitor_data
+				where		(tp=$criteria.tp)
+						and
+						(id=$criteria.id)
+				]]>
+			</customSQL>
+		</operationBinding>
+
+
+		<operationBinding operationId="updateMapObjectData"
+			operationType="fetch">
+			<customSQL>
+			<![CDATA[ 
+					select  globals.updateMapObjectData($criteria.oid,$criteria.regid,$criteria.raiid,$criteria.cusid,$criteria.type,$criteria.xml_text,$criteria.from_srid,$criteria.feature_text,$criteria.layer_id,$criteria.user_id)
+				]]>
+			</customSQL>
+		</operationBinding>
+		<operationBinding operationId="deleteMapObjectData"
+			operationType="fetch">
+			<customSQL>
+			<![CDATA[ 
+					select  globals.deleteMapObjectData($criteria.oid,$criteria.layer_id,$criteria.user_id)
+				]]>
+			</customSQL>
+		</operationBinding>
+	<operationBinding operationId="getbuildingsindistance"
+	    operationType="fetch">
+	    <customSQL>
+	    <![CDATA[
+		    select array_to_string(array_agg(distinct buid), ',') buids,
+		    array_to_string(array_agg((select array_to_string(array_agg(bc.cusid), ',') from maps.building_to_customers bc where bc.building_id=b.buid)), ',') cusids,
+			    astext(st_transform(ST_Collect(b.the_geom),$criteria.from_srid)) builds_collection from buildings b
+		    where b.raiid=$criteria.subregionid and st_intersects(b.the_geom,st_buffer(st_transform(ST_GeomFromText($criteria.point,
+			$criteria.from_srid),$criteria.to_srid),$criteria.distance)) 
+		]]>
+	    </customSQL>
+	</operationBinding>
+	<operationBinding operationId="getcustomerdistances"
+	    operationType="fetch">
+	    <customSQL>
+	    <![CDATA[
+		    select b2c.cusid,b.buid,co.mobject_id,b.buid,
+		    st_distance(st_transform(ST_GeomFromText($criteria.point,$criteria.from_srid),$criteria.to_srid),b.the_geom) distance,
+		    astext(st_transform(b.lcentroid,$criteria.from_srid)) lcentroid
+		    from maps.building_to_customers b2c
+		    inner join buildings b on b.buid=b2c.building_id
+		    left join maps.customer_object co on co.cusid=b2c.cusid
+		    where (b2c.cusid =ANY (string_to_array($criteria.cusids,',')::bigint[]))
+		    order by b.buid
+		]]>
+	    </customSQL>
+	</operationBinding>
+	</operationBindings>
+
+</DataSource>

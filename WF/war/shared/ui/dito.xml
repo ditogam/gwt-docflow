@@ -1,0 +1,12 @@
+<TreeGrid ID="TreeGrid0" autoDraw="false">    <fields>        <TreeGridField name="TreeGridField0" title="TreeGridField0"/>    </fields></TreeGrid>
+
+<TileGrid ID="TileGrid0" autoDraw="false">    <fields>        <TileGridField name="TileGridField0" title="TileGridField0"/>    </fields></TileGrid>
+
+<DetailViewer ID="DetailViewer0" autoDraw="false">    <fields>        <DetailViewerField name="DetailViewerField1" title="DetailViewerField1"/>        <DetailViewerField name="DetailViewerField0" title="DetailViewerField0"/>    </fields></DetailViewer>
+
+<DynamicForm ID="DynamicForm1612" autoDraw="false">    <fields>        <ComboBoxItem name="ComboBoxItem0"/>        <TextItem name="TextItem0">            <caption_id>9</caption_id>        </TextItem>    </fields>    <isGroup>true</isGroup>    <groupTitle>?????????????</groupTitle>    <caption_id>14</caption_id>    <value_manager_group>fff</value_manager_group></DynamicForm>
+
+<HLayout ID="HLayout0" autoDraw="false">    <members><Canvas ref="TreeGrid0"/><Canvas ref="TileGrid0"/><Canvas ref="DetailViewer0"/><Canvas ref="DynamicForm1612"/>    </members></HLayout>
+
+<DataView ID="DataView0" width="100%" height="100%" overflow="hidden" autoDraw="true">    <members><Canvas ref="HLayout0"/>    </members>    <modulesDir>modules/</modulesDir>    <minMemberSize>18</minMemberSize></DataView>
+

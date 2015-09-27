@@ -1,0 +1,39 @@
+<DataSource ID="HRStructureDS" serverType="sql" tableName="structure_item"
+	dbName="HR">
+	<fields>
+		<field name="item_id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" />
+		<field name="item_parent_id" type="integer" title="Parent ID"
+			hidden="true" foreignKey="HRStructureDS.item_id" rootValue="0"
+			detail="true" />
+		<field name="item_name" type="text" title="Name111" />
+		<field name="opened" type="text" title="Name111" hidden="true" />
+		<field name="item_type_id" type="integer" title="ID" />
+		<field name="object_id" type="integer" title="ID" />
+		<field name="item_name_id" type="integer" title="ID" />
+
+	</fields>
+
+
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="item_id,item_parent_id,item_name,item_type_id,item_type_id,object_id">
+			<selectClause> <![CDATA[ 
+				item_id,item_parent_id, getcaption(COALESCE(item_name_id,-1),]]><![CDATA[ 
+					#if($criteria.language_id)
+						$criteria.language_id
+					#elseif($values.language_id)
+						$values.language_id
+						
+					#end
+				]]>
+				<![CDATA[-0,item_name) item_name,item_type_id,item_type_id,object_id ]]>
+			</selectClause>
+			<tableClause>
+				structure_item
+			</tableClause>
+		</operationBinding>
+	</operationBindings>
+
+</DataSource>

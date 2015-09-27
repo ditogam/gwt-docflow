@@ -1,0 +1,44 @@
+<DataSource ID="DocumentShortDS" serverType="sql" tableName="document_v"
+	dbName="DocFlow">
+	<fields>
+		<field name="doc_date" type="long" />
+		<field name="doc_status_id" type="integer" />
+		<field name="docstatus" type="text" />
+		<field name="user_id" type="integer" />
+		<field name="user_name" type="text" />
+		<field name="controller_id" type="integer" />
+		<field name="controller_name" type="text" />
+		<field name="doc_date_start" type="long" />
+		<field name="transaction_date" type="long" />
+		<field name="doc_date_status_change" type="long" />
+		<field name="version_id" type="integer" />
+		<field name="id" type="integer" primaryKey="true" />
+		<field name="doc_type_id" type="integer" />
+		<field name="doctype" type="text" />
+		<field name="doc_flow_num" type="text" />
+		<field name="cust_id" type="integer" />
+		<field name="street_id" type="integer" />
+		<field name="streenname" type="text" />
+		<field name="cityid" type="integer" />
+		<field name="cityname" type="text" />
+		<field name="subregionid" type="integer" />
+		<field name="subregionname" type="text" />
+		<field name="regionid" type="integer" />
+		<field name="regionname" type="text" />
+		<field name="czona" type="long" />
+		<field name="cancelary_nom" type="text" />
+		<field name="shxml" type="text" />
+		<field name="customer_name" type="text" />
+		<field name="error" type="text" />
+		<field name="filecount" type="integer" />
+	</fields>
+
+	<serverObject lookupStyle="new"
+		className="com.docflow.server.db.DocumentShortDSDMI" />
+	<operationBindings>
+		<binding operationType="fetch" serverMethod="fetch">
+			<serverObject lookupStyle="new"
+				className="com.docflow.server.db.DocumentShortDSDMI" />
+		</binding>
+	</operationBindings>
+</DataSource>

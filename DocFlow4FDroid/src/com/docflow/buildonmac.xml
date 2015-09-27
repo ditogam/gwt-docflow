@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="ImageViewer" default="all" basedir="/Users/dito/Documents/workspace/DocFlow">
+	<description>
+		This is build file for GWT module 'com.docflow.DocFlow' deployment.
+		GWT Designer generates it each time when you initiate deployment.
+		
+		You can use this file later for manual deployment, but keep in mind, that
+		classpath is hardcoded in it, so after changes in classpath you should
+		regenerate build file.
+	</description>
+
+	<property name="gwt.home" value="/Users/Shared/install/eclipse/plugins/com.google.gwt.eclipse.sdkbundle_2.5.0/gwt-2.5.0" />
+	<property name="gwt.module.id" value="com.docflow.DocFlow" />
+	<property name="war.name" value="DocFlow.war" />
+
+	<target name="jars" description="Package up the module project and required projects as jars">
+		<mkdir dir="war/WEB-INF/lib" />
+		<!--=== DocFlow ===-->
+		<jar destfile='war/WEB-INF/lib/zzzDocFlow.jar'>
+			<fileset dir="/Users/dito/Documents/workspace/DocFlow/src">
+				<include name="**" />
+			</fileset>
+			<fileset dir="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/classes">
+				<include name="**/*.class" />
+			</fileset>
+		</jar>
+		<copy todir='war/WEB-INF/lib'>
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/smartgwt-skins.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/smartgwt.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/commons-dbcp-1.4.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/commons-pool-1.5.5.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/postgresql-9.0-801.jdbc3.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/commons-logging-1.1.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/dom4j-1.6.1.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/geronimo-stax-api_1.0_spec-1.0.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/junit-3.8.1.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/log4j-1.2.13.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/poi-3.7-20101029.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/poi-ooxml-3.7-20101029.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/poi-ooxml-schemas-3.7-20101029.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/poi-scratchpad-3.7-20101029.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/xmlbeans-2.3.0.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/commons-httpclient-3.1.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/ejb3-persistence.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_assembly.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_compression.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_core_rpc.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_hibernate.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_jpa.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_spring.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_sql.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_struts.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_tools.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_web_services.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/messaging.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/slf4j-api-1.5.6.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/slf4j-log4j12-1.5.6.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/smartgwtee.jar" />
+			<fileset file="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/nanoxml-lite-2.2.3.jar" />
+			<fileset file="${gwt.home}/gwt-dev.jar" />
+			<fileset file="${gwt.home}/validation-api-1.0.0.GA-sources.jar" />
+			<fileset file="${gwt.home}/validation-api-1.0.0.GA.jar" />
+			<fileset file="/Users/dito/Documents/workspace/CommonLibray/smartgwt-skins.jar" />
+			<fileset file="/Users/dito/Documents/workspace/CommonLibray/smartgwt.jar" />
+			<fileset file="/Users/dito/Documents/workspace/CommonLibray/gwt-openlayers-client-0.5.jar" />
+			<fileset file="/Users/dito/Documents/workspace/CommonLibray/commons-dbcp-1.4.jar" />
+			<fileset file="/Users/dito/Documents/workspace/CommonLibray/commons-pool-1.5.5.jar" />
+		</copy>
+		<!--=== CommonLibray ===-->
+		<jar destfile='war/WEB-INF/lib/zzzCommonLibray.jar'>
+			<fileset dir="/Users/dito/Documents/workspace/CommonLibray/src">
+				<include name="**" />
+			</fileset>
+			<fileset dir="/Users/dito/Documents/workspace/CommonLibray/bin">
+				<include name="**/*.class" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="gwt-compile" description="Compile to JavaScript">
+		<java classname="com.google.gwt.dev.Compiler" fork="yes" failonerror="true" maxmemory="1024m">
+			<classpath>
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/src" />
+				<pathelement location="/Users/dito/Documents/workspace/CommonLibray/src" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/classes" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/smartgwt-skins.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/smartgwt.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/commons-dbcp-1.4.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/commons-pool-1.5.5.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/postgresql-9.0-801.jdbc3.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/commons-logging-1.1.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/dom4j-1.6.1.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/geronimo-stax-api_1.0_spec-1.0.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/junit-3.8.1.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/log4j-1.2.13.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/poi-3.7-20101029.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/poi-ooxml-3.7-20101029.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/poi-ooxml-schemas-3.7-20101029.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/poi-scratchpad-3.7-20101029.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/xmlbeans-2.3.0.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/commons-httpclient-3.1.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/ejb3-persistence.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_assembly.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_compression.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_core_rpc.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_hibernate.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_jpa.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_spring.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_sql.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_struts.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_tools.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/isomorphic_web_services.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/messaging.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/slf4j-api-1.5.6.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/slf4j-log4j12-1.5.6.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/smartgwtee.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/DocFlow/war/WEB-INF/lib/nanoxml-lite-2.2.3.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/CommonLibray/bin" />
+				<pathelement location="${gwt.home}/gwt-user.jar" />
+				<pathelement location="${gwt.home}/gwt-dev.jar" />
+				<pathelement location="${gwt.home}/validation-api-1.0.0.GA-sources.jar" />
+				<pathelement location="${gwt.home}/validation-api-1.0.0.GA.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/CommonLibray/smartgwt-skins.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/CommonLibray/smartgwt.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/CommonLibray/gwt-openlayers-client-0.5.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/CommonLibray/commons-dbcp-1.4.jar" />
+				<pathelement location="/Users/dito/Documents/workspace/CommonLibray/commons-pool-1.5.5.jar" />
+				<pathelement location="${gwt.home}/gwt-dev.jar" />
+			</classpath>
+			<arg value="-style" />
+			<arg value="OBFUSCATED" />
+			<arg value="${gwt.module.id}" />
+		</java>
+	</target>
+
+	<target name="war" depends="jars">
+		<delete file="${war.name}" />
+		<jar destfile="${war.name}" basedir="war" duplicate="preserve" />
+	</target>
+
+	<target name="deploy" depends="war">
+		<move file="${war.name}" todir="/Users/dito/Documents/workspace/DocFlow" />
+	</target>
+
+	<target name="all" depends="deploy" />
+
+</project>

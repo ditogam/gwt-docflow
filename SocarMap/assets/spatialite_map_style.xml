@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tables>
+
+    <Table
+        geom_name="the_geom"
+        id_name="ppcityid"
+        maxZoom="-1"
+        minZoom="10"
+        srid="4326"
+        table_name="map_info"
+        tags_name="&apos;natural=&apos;||hex(&apos;water&apos;)" />
+
+    <Table
+        geom_name="the_geom"
+        id_name="id"
+        maxZoom="-1"
+        minZoom="10"
+        srid="4326"
+        table_name="settlements"
+        tags_name="&apos;natural=&apos;||hex(&apos;beach&apos;)" />
+
+    <Table
+        geom_name="the_geom"
+        id_name="ruid"
+        maxZoom="-1"
+        minZoom="15"
+        srid="4326"
+        table_name="roads"
+        tags_name="&apos;highway=&apos;||hex(&apos;secondary&apos;)||&apos;;name=&apos;||hex(ifnull(rname,&apos;&apos;))"
+        tags_name1="&apos;highway=&apos;||hex(&apos;secondary&apos;)||&apos;;name=&apos;||hex(ifnull(rname,&apos;&apos;)||ruid)" />
+
+    <Table
+        geom_name="the_geom"
+        id_name="buid"
+        maxZoom="-1"
+        minZoom="15"
+        srid="4326"
+        table_name="buildings"
+        tags_name="case when has_customer=0 then &apos;emptybuilding&apos; else &apos;nonemptybuilding&apos; end|| &apos;=&apos;||hex(&apos;bld&apos;)" />
+
+    <Table
+        geom_name="bcentroid"
+        id_name="buid"
+        maxZoom="-1"
+        minZoom="16"
+        srid="4326"
+        table_name="buildings"
+        tags_name="&apos;barrier=&apos;||hex(&apos;bollard&apos;)" />
+
+</Tables>

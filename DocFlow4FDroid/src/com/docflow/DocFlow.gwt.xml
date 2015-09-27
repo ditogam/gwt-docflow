@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='docflow'>
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.user.User' />
+
+	<inherits name="com.smartgwtee.SmartGwtEENoScript" />
+	<inherits name="com.smartgwt.Drawing" />
+	<inherits name="com.smartgwt.Charts" />
+	<inherits name="com.smartgwt.Analytics" />
+	<inherits name="com.smartgwt.RealtimeMessaging" />
+	<inherits name="com.smartgwtee.tools.Tools" />
+	<inherits name="com.smartclient.theme.enterprise.EnterpriseResources" />
+
+	<inherits name='com.common.CommonLibrary' />
+
+	<inherits name="com.google.web.bindery.event.Event" />
+	<entry-point class='com.docflow.client.DocFlow' />
+
+
+
+
+
+
+	<source path='client' />
+	<source path='shared' />
+
+</module>

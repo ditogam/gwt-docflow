@@ -1,0 +1,10 @@
+<DataSource ID="MeterDeviceConfigDS" serverType="sql"
+	tableName="corectors.meter_device_config" dbName="MAP">
+	<fields>
+		<field name="id" type="sequence" title="id" hidden="true"
+			primaryKey="true" />
+		<field name="descript" type="text" title="Descripttion " />
+		<field name="xml_text" type="text" title="xml_text" hidden="true" />
+	</fields>
+
+</DataSource>

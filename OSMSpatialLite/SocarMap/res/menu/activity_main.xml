@@ -1,0 +1,85 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <group
+        android:id="@+id/mg_main"
+        android:checkableBehavior="none" >
+        <item
+            android:id="@+id/m_degree"
+            android:title="Enter degree"/>
+        <item
+            android:id="@+id/m_my_location"
+            android:checkable="true"
+            android:checked="false"
+            android:title="@string/my_location"
+            android:titleCondensed="@string/my_location"/>
+        <item
+            android:id="@+id/m_compass"
+            android:checkable="true"
+            android:checked="false"
+            android:title="@string/compass"
+            android:titleCondensed="@string/compass"/>
+        <item
+            android:id="@+id/m_goto_center"
+            android:icon="@drawable/ic_menu_mylocation"
+            android:title="@string/goto_center"/>
+        <item
+            android:id="@+id/m_m_barcode"
+            android:icon="@drawable/barcode"
+            android:title="@string/scan_customer_barcode">
+        </item>
+        <item
+            android:id="@+id/m_search"
+            android:icon="@android:drawable/ic_search_category_default"
+            android:title="@string/search">
+        </item>
+        <item
+            android:icon="@android:drawable/ic_menu_preferences"
+            android:title="@string/map_manipulate">
+            <menu>
+                <item
+                    android:id="@+id/mi_show_titles"
+                    android:checkable="true"
+                    android:checked="false"
+                    android:title="@string/mi_show_tiles"
+                    android:titleCondensed="@string/mi_hide_tiles">
+                </item>
+
+                <group
+                    android:id="@+id/mg_manipipulate"
+                    android:checkableBehavior="single" >
+                    <item
+                        android:id="@+id/mi_building_select"
+                        android:checked="true"
+                        android:icon="@drawable/home"
+                        android:title="@string/building_select"/>
+                    <item
+                        android:id="@+id/mi_cus_meter"
+                        android:checked="false"
+                        android:icon="@drawable/customer_meter"
+                        android:title="@string/cus_meter"/>
+                    <item
+                        android:id="@+id/mi_distinct_meter"
+                        android:checked="false"
+                        android:icon="@drawable/district_meter"
+                        android:title="@string/distinct_meter"/>
+                    <item
+                        android:id="@+id/mi_demage"
+                        android:checked="false"
+                        android:icon="@drawable/fire"
+                        android:title="@string/demage"/>
+                    <item
+                        android:id="@+id/mi_building_add"
+                        android:checked="false"
+                        android:icon="@drawable/home"
+                        android:title="@string/add_building"/>
+                </group>
+            </menu>
+        </item>
+        <item
+            android:id="@+id/m_download"
+            android:icon="@drawable/import_icon"
+            android:title="@string/l_download">
+        </item>
+    </group>
+
+</menu>

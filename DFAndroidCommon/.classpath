@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="com/common/client/|com/common/db/|remove.sh" kind="src" path="common"/>
+	<classpathentry excluding="com/docflow/server/**|remove.sh" including="com/docflow/client/DocFlowService.java|com/docflow/shared/**" kind="src" path="docflow"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="src" path="gwt"/>
+	<classpathentry excluding="com/googlecode/xremoting/core/servlet/XRemotingServlet.java" kind="src" path="xremoting"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="lib" path="lib/xstream-1.4.4.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

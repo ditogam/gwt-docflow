@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="CustShortMeterDS" serverType="sql"
+	tableName="maps.v_customer_withmeter">
+	<fields>
+		<field name="cusid" type="integer" title="Customer ID"
+			primaryKey="true" width="100" />
+		<field name="cusname" type="text" title="Customer Name" width="100" />
+		<field name="cityname" type="text" title="City" width="100" />
+		<field name="streetname" type="text" title="Street" width="100" />
+		<field name="meterid" type="integer" title="Zone" width="100" />
+		<field name="metserial" type="text" title="Zone" width="100" />
+		<field name="mtypeid" type="integer" title="Zone" width="100" />
+		<field name="mtypename" type="text" title="Zone" width="100" />
+		<field name="mstatusid" type="integer" title="Zone" width="100" />
+		<field name="meter_status" type="text" title="Zone" width="100" />
+		<field name="mstatusid" type="integer" title="Zone" width="100" />
+		<field name="pmeterid" type="integer" title="Zone" width="100" />
+		<field name="pmeter_cusid" type="integer" title="Zone" width="100" />
+		<field name="subregionid" type="integer" title="Zone" width="100" />
+		<field name="zone" type="text" title="Zone" width="100" />
+	</fields>
+	<serverObject lookupStyle="new"
+		className="com.docflow.server.db.map.BuildingCustomersDMI" />
+	<operationBindings>
+
+
+		<operationBinding operationType="fetch"
+			operationId="fetchBuildCustomersResult" serverMethod="fetchBuildCustomersResult">
+			<serverObject lookupStyle="new"
+				className="com.docflow.server.db.map.BuildingCustomersDMI" />
+		</operationBinding>
+
+		<operationBinding operationType="fetch" operationId="fetchMeterBuildins"
+			serverMethod="fetchMeterBuildins">
+			<serverObject lookupStyle="new"
+				className="com.docflow.server.db.map.BuildingCustomersDMI" />
+		</operationBinding>
+
+		<operationBinding operationType="fetch">
+			<whereClause><![CDATA[
+				
+			    1=1
+			    
+			    #if($criteria.cus_ids)
+						and 
+						cusid in (select unnest(string_to_array($criteria.cus_ids,';') )::integer) 
+				#end
+				#if($criteria.pmeter_cusid)
+				and
+				( 
+					pmeter_cusid=$criteria.pmeter_cusid
+					#if($criteria.has_no_parent)
+							or 
+							  pmeter_cusid is null
+							
+					#end
+				)
+				#end
+				#if($criteria.subregionid)
+					and subregionid=$criteria.subregionid
+				#end	
+				#if($criteria.mstatusid)
+					and mstatusid=$criteria.mstatusid
+				#end
+				#if($criteria.zone)
+					and cusid in (select cc.cusid from customer cc where cc.zone=$criteria.zone)
+				#end	
+				]]>
+			</whereClause>
+			<orderClause>
+				cusid,mstatusid,meterid
+			</orderClause>
+		</operationBinding>
+		<operationBinding operationType="fetch"
+			operationId="getBuildingsFromCustomers">
+			<customSQL>
+				select array_to_string(array_agg(bc.building_id), ',') cusname from
+				meter m
+				inner join maps.building_to_customers bc on bc.cusid=m.cusid
+				where m.meterid in (select
+				unnest(string_to_array($criteria.meter_ids,',') )::integer)
+			</customSQL>
+		</operationBinding>
+
+		<operationBinding operationType="fetch" operationId="saveParentMeter">
+			<customSQL>
+				select maps.updateparentmeters($criteria.meter_cusid,$criteria.meter_ids)
+				cusname
+			</customSQL>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

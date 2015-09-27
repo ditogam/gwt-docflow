@@ -1,0 +1,16 @@
+<DataSource ID="GetHttpReqvestDS" serverType="sql" tableName="http_get"
+	dbName="MAP">
+	<fields>
+		<field name="content" type="text" title="name" />
+		<field name="url" type="text" title="name" />
+	</fields>
+	
+	<operationBinding operationId="execHttpGet"
+			operationType="fetch">
+			<customSQL>
+			<![CDATA[
+					SELECT  content FROM http_get(replace($criteria.url,'korp3TIM','korp3TIMTDT'))
+				]]>
+			</customSQL>
+	</operationBinding>
+</DataSource>

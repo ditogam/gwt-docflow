@@ -1,0 +1,59 @@
+<DataSource ID="DayCloseDetailsDS" serverType="sql"
+	tableName="v_dayclose_details_full">
+	<fields>
+		<field name="btransid" type="integer" title="Tran#" canFilter="false"/>
+		<field name="banktime" type="datetime" title="Bank ime" canFilter="false"/>
+		<field name="realtime" type="datetime" title="Real time" canFilter="false"/>
+		<field name="cusid" type="integer" title="CusId" canFilter="true"/>
+		<field name="cusname" type="text" title="Customer" canFilter="true"/>
+		<field name="phone" type="text" title="Phone" canFilter="false"/>
+		<field name="streetname" type="text" title="Street" canFilter="false"/>
+		<field name="cityname" type="text" title="City" canFilter="false"/>
+		<field name="pcityname" type="text" title="Subregion" canFilter="false"/>
+		<field name="amount" type="double" title="Amount" canFilter="false"/>
+		<field name="bname" type="text" title="Bank" canFilter="false"/>
+		<field name="btn" type="text" title="V" canFilter="false"/>
+		<field name="boperid" type="integer" title="operator" hidden="true" canFilter="false"/>
+		<field name="bactive" type="integer" title="BActive" hidden="true" canSort="false" canFilter="false"/>
+	</fields>
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="btransid,banktime,realtime,cusid,cusname,phone,streetname,cityname,pcityname,amount,bname,btn,boperid,bactive">
+			<selectClause> <![CDATA[ 
+				btransid,banktime,realtime,cusid,cusname,phone,streetname,cityname,pcityname,amount,bname,btn,boperid,bactive ]]>
+			</selectClause>
+			<tableClause>
+				v_dayclose_details_full
+			</tableClause>
+			<whereClause>
+                              <![CDATA[ 
+                              ($criteria.bankid<0 or bankid=$criteria.bankid)
+                              #if($criteria.ppcity) 
+                              	and ($criteria.ppcity<0 or ppcityid=$criteria.ppcity)
+                              #end
+                              #if($criteria.cusid) 
+                              	and (cusid::text like $criteria.cusid||'%')
+                              #end
+                              #if($criteria.cusname) 
+                              	and (cusname like '%'||$criteria.cusname||'%')
+                              #end
+                              	and (date(banktime)=date($criteria.bankdate))
+                              	and acc_id=$criteria.acc_id
+                            
+                              ]]>
+			</whereClause>
+			<!--  <orderClause>banktime,cusname</orderClause> -->
+		</operationBinding>
+		<operationBinding operationType="update"
+			serverMethod="update" allowMultiUpdate="true">
+			<serverObject lookupStyle="new"
+				className="com.docflow.server.db.FakeDBOperations" />
+		</operationBinding>
+		<operationBinding operationType="remove"
+			serverMethod="update" allowMultiUpdate="true">
+			<serverObject lookupStyle="new"
+				className="com.docflow.server.db.FakeDBOperations" />
+		</operationBinding>
+	</operationBindings>
+</DataSource>

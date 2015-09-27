@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource
+    ID="JSDefinitionsDS"
+    dbName="DocFlow"
+    serverType="sql"
+    tableName="dsdefinition.js_definition" >
+
+    <fields>
+
+        <field
+            name="id"
+            hidden="true"
+            primaryKey="true"
+            sequenceName="dsdefinition.js_definition_id_seq"
+            title="ID"
+            type="sequence"
+            width="100" />
+
+        <field
+            name="js_text"
+            title="JS Text"
+            type="text"
+            width="100" />
+
+    </fields>
+
+</DataSource>

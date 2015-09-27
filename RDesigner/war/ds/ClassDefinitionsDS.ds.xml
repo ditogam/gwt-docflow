@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource
+    ID="ClassDefinitionsDS"
+    dbName="DocFlow"
+    serverType="sql"
+    tableName="dsdefinition.class_definition" >
+
+    <fields>
+
+        <field
+            name="id"
+            hidden="true"
+            primaryKey="true"
+            sequenceName="dsdefinition.class_definition_id_seq"
+            title="ID"
+            type="sequence"
+            width="100" />
+
+        <field
+            name="class_name"
+            title="Class name"
+            type="text"
+            width="100" />
+
+        <field
+            name="package_name"
+            title="Package name"
+            type="text"
+            width="100" />
+
+        <field
+            name="code"
+            title="Code text"
+            type="text"
+            width="100" />
+    </fields>
+
+</DataSource>

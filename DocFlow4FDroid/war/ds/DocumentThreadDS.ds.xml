@@ -1,0 +1,71 @@
+<DataSource ID="DocumentThreadDS" serverType="sql"
+	tableName="v_document_thread" dbName="DocFlow">
+	<fields>
+		<field name="thread_id" type="sequence" title="ID" primaryKey="true"
+			sequenceName="document_thread_thread_id_seq" width="100" />
+		<field name="thread_name" type="text" title="Thread Name" />
+		<field name="reg_time" type="datetime" title="Reg date" width="200" />
+		<field name="reg_user_id" type="integer" title="reg_user_id"
+			hidden="true" />
+		<field name="user_name" type="text" title="User name" width="200" />
+		<field name="doc_id" type="integer" title="doc_id" hidden="true" />
+	</fields>
+
+	<operationBindings>
+		<operationBinding operationType="fetch">
+			<customSQL>
+			    <![CDATA[
+					select thread_id,thread_name,reg_time,reg_user_id , user_name
+					from v_document_thread t
+					where 1=1 
+					#if($criteria.thread_id||($criteria.st_date && $criteria.end_date)||$criteria.rec_user||($criteria.doc_st_date && $criteria.doc_end_date) || $criteria.cus_id || $criteria.region_id || $criteria.subregion_id ||$criteria.city_id || $criteria.doc_id || $criteria.cancelary)
+							#if($criteria.thread_id)
+								and t.thread_id = $criteria.thread_id 
+							#else
+								#if($criteria.st_date && $criteria.end_date) 
+									and t.reg_time between $criteria.st_date and $criteria.end_date
+								#end
+								#if($criteria.rec_user) 
+									and exists( select 1 from susers u where lower(u.user_name)=lower($criteria.rec_user) and t.reg_user_id=u.id)
+								#end
+								#if(($criteria.doc_st_date && $criteria.doc_end_date) || $criteria.cus_id || $criteria.region_id || $criteria.subregion_id ||$criteria.city_id || $criteria.doc_id || $criteria.cancelary)
+									 and exists( select 1 from documents d where t.thread_id=d.thread_id
+										#if($criteria.doc_id) 
+											and d.id=$criteria.doc_id
+										#end
+										#if($criteria.cancelary) 
+											and d.cancelary_nom=$criteria.cancelary
+										#end
+									 	#if($criteria.doc_st_date && $criteria.doc_end_date) 
+											and d.doc_date between $criteria.doc_st_date and $criteria.doc_end_date
+										#end
+										#if($criteria.cus_id) 
+											and d.cust_id=$criteria.cus_id
+										#end
+										#if($criteria.region_id) 
+											and d.regionid=$criteria.region_id
+										#end
+										#if($criteria.subregion_id) 
+											and d.subregionid=$criteria.subregion_id
+										#end
+										#if($criteria.city_id) 
+											and d.cityid=$criteria.city_id
+										#end
+									 
+									 )
+								#end
+							#end
+						#else
+							and 1!=1
+						#end
+				]]>
+			</customSQL>
+		</operationBinding>
+		<operationBinding operationType="update" operationId="updateBinding">
+			<customSQL>
+				update documents set thread_id=$values.thread_id where
+				id=$values.doc_id;
+			</customSQL>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

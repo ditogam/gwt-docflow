@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp"
+	xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>WF</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<resource-ref>
+		<description>DB Connection Pool</description>
+		<res-ref-name>jdbc/workflow</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+
+
+
+	<servlet>
+		<servlet-name>RedirectVBXML</servlet-name>
+		<servlet-class>com.workflow.server.servlets.RedirectVBXML</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RedirectVBXML</servlet-name>
+		<url-pattern>/globalDependencies.xml</url-pattern>
+		<url-pattern>/defaultComponents.xml</url-pattern>
+		<url-pattern>/defaultMockupComponents.xml</url-pattern>
+	</servlet-mapping>
+
+	<!-- standard spring configuration -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/applicationContext.xml
+			/WEB-INF/applicationContext-security.xml
+		</param-value>
+	</context-param>
+
+	<filter>
+		<filter-name>CompressionFilter</filter-name>
+		<filter-class>com.isomorphic.servlet.CompressionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CompressionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>IDACall</servlet-name>
+		<servlet-class>com.isomorphic.servlet.IDACall</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>RESTHandler</servlet-name>
+		<servlet-class>com.isomorphic.servlet.RESTHandler</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>DataSourceLoader</servlet-name>
+		<servlet-class>com.isomorphic.servlet.DataSourceLoader</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>screenLoader</servlet-name>
+		<servlet-class>com.workflow.server.servlets.ScreenLoaderServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>FileDownload</servlet-name>
+		<servlet-class>com.isomorphic.servlet.FileDownload</servlet-class>
+	</servlet>
+	<listener>
+		<listener-class>com.isomorphic.base.InitListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>Init</servlet-name>
+		<servlet-class>com.isomorphic.base.Init</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>HttpProxy</servlet-name>
+		<servlet-class>com.isomorphic.servlet.HttpProxyServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>PreCache</servlet-name>
+		<servlet-class>com.isomorphic.servlet.PreCache</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+
+
+
+
+	<servlet-mapping>
+		<servlet-name>IDACall</servlet-name>
+		<url-pattern>/workflow/isomorphic/IDACall/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>IDACall</servlet-name>
+		<url-pattern>/workflow/isomorphic/IDACall.aspx/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DataSourceLoader</servlet-name>
+		<url-pattern>/isomorphic/DataSourceLoader</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>screenLoader</servlet-name>
+		<url-pattern>/workflow/isomorphic/screenLoader</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>HttpProxy</servlet-name>
+		<url-pattern>/isomorphic/HttpProxy/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FileDownload</servlet-name>
+		<url-pattern>/workflow/isomorphic/skins/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FileDownload</servlet-name>
+		<url-pattern>/workflow/isomorphic/system/modules/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FileDownload</servlet-name>
+		<url-pattern>/isomorphic/system/development/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FileDownload</servlet-name>
+		<url-pattern>/isomorphic/system/reference/skin/*</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<jsp-config>
+		<taglib>
+			<taglib-uri>isomorphic</taglib-uri>
+			<taglib-location>/WEB-INF/iscTaglib.xml</taglib-location>
+		</taglib>
+		<jsp-property-group>
+			<url-pattern>*.isc</url-pattern>
+			<include-prelude>/shared/jsp/iscHeader.jsp</include-prelude>
+			<include-coda>/shared/jsp/iscFooter.jsp</include-coda>
+		</jsp-property-group>
+		<jsp-property-group>
+			<url-pattern>*.rpc</url-pattern>
+			<include-prelude>/shared/jsp/rpcHeader.jsp</include-prelude>
+			<include-coda>/shared/jsp/rpcFooter.jsp</include-coda>
+		</jsp-property-group>
+	</jsp-config>
+	<mime-mapping>
+		<extension>manifest</extension>
+		<mime-type>text/cache-manifest</mime-type>
+	</mime-mapping>
+</web-app>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="SystemDS" serverType="sql" tableName="wfsystem">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" sequenceName="wfsystem_id_seq" />
+		<field name="system_name" type="text" title="System" />
+		<field name="sort_order" type="integer" title="Sort order" />
+		<field name="load_modules" type="text" title="Load modules" />
+		<field name="panel_function" type="text" title="Panel function" />
+
+	</fields>
+	<operationBindings>
+		<operationBinding operationType="fetch">
+			<orderClause>sort_order</orderClause>
+		</operationBinding>
+		<operationBinding operationType="fetch" operationId="selectModulePath">
+			<serverObject className="com.workflow.server.dmi.SystemsDMI"
+				lookupStyle="new" />
+			<serverMethod>selectModulePath</serverMethod>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

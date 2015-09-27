@@ -1,0 +1,11 @@
+<DataSource ID="Demage_Description_FilesDS" dbName="MAP"
+	dropExtraFields="false" serverType="sql" tableName="demage_description_files">
+
+	<fields>
+
+		<field name="id" hidden="true" primaryKey="true" title="ID"
+			type="integer" />
+		<field name="description_id" title="integer" type="integer" />
+		<field name="file_data" title="ID" type="imageFile" />
+	</fields>
+</DataSource>

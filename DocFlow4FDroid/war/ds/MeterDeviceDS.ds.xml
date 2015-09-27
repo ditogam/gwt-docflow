@@ -1,0 +1,52 @@
+<DataSource ID="MeterDeviceDS" serverType="sql"
+	tableName="corectors.v_meter_device" dbName="MAP">
+	<fields>
+		<field name="id" type="sequence" title="id" hidden="true"
+			primaryKey="true" sequenceName="corectors.meter_device_id_seq"/>
+		<field name="name" type="text" title="Server Name" />
+		<field name="ip" type="text" title="Host(ip)" width="120"/>
+		<field name="port" type="integer" title="Port" width="50" align="center"/>
+		<field name="h_last_att_time" type="datetime" title="Attempt time(Hour)" width="120"/>
+		<field name="h_last_succ_time" type="datetime" title="Success time(Hour)" width="120"/>
+		<field name="d_last_att_time" type="datetime" title="Attempt time(Day)" width="120"
+			hidden="true" />
+		<field name="d_last_succ_time" type="datetime" title="Success time(Day)" width="120"
+			hidden="true" />
+		<field name="m_last_att_time" type="datetime" title="Attempt time(Month)" width="120"
+			hidden="true" />
+		<field name="m_last_succ_time" type="datetime" title="Success time(Month)" width="120"
+			hidden="true" />
+		<field name="h_error" type="text" title="Error(Hour)" />
+		<field name="d_error" type="text" title="Error(Day)" hidden="true" />
+		<field name="m_error" type="text" title="Error(Month)" hidden="true" />
+		<field name="config_xml_id" type="integer" hidden="true" />
+		<field name="shcedule" type="text" title="shcedule" />
+		<field name="config_xml" type="text" title="Config type" width="150"/>
+		<field name="region" type="text" title="Config type" width="150" hidden="true"/>
+		<field name="subregion" type="text" title="Subregion" width="150" />
+		<field name="subregion_id" type="integer" title="Subregion" width="150" hidden="true"/>
+		<field name="region_id" type="integer" title="Subregion" width="150" hidden="true"/>
+	</fields>
+	<serverObject lookupStyle="new"
+		className="com.docflow.server.corector.MeterCorectorDMI" />
+	<operationBindings>
+		<operationBinding operationType="add" operationId="addCorector" serverMethod="addEditCorector">
+            <serverObject lookupStyle="new" className="com.docflow.server.corector.MeterCorectorDMI"/>
+        </operationBinding>
+        
+        <!-- Update Abonent -->
+		<operationBinding operationType="update" operationId="updateCorector" serverMethod="addEditCorector">
+            <serverObject lookupStyle="new" className="com.docflow.server.corector.MeterCorectorDMI"/>
+        </operationBinding>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch">
+			<selectClause> <![CDATA[ 
+					*
+				]]>
+			</selectClause>
+			<tableClause>
+				corectors.v_meter_device
+			</tableClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

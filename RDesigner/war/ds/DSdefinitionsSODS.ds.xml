@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource
+    ID="DSdefinitionsSODS"
+    dbName="DocFlow"
+    serverType="sql"
+    tableName="dsdefinition.dsdefinition_so" >
+
+    <fields>
+        <field
+            name="id"
+            hidden="true"
+            primaryKey="true"
+            sequenceName="dsdefinition.dsdefinition_so_id_seq"
+            title="ID"
+            type="sequence"
+            width="100" />
+
+        <field
+            name="dsdefinitions_id"
+            hidden="true"
+            title="ID"
+            type="integer"
+            width="100" />
+
+        <field
+            name="operation_b_text"
+            title="XML text"
+            type="text"
+            width="100" />
+    </fields>
+
+</DataSource>

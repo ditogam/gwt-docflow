@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- When updating your version of GWT, you should also update this DTD reference, 
+	so that your app can take advantage of the latest GWT module capabilities. -->
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.5.1//EN"
+  "http://google-web-toolkit.googlecode.com/svn/tags/2.5.1/distro-source/core/src/gwt-module.dtd">
+<module rename-to='workflow'>
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.user.User' />
+	<inherits name="com.smartgwtee.SmartGwtEENoScript" />
+	<inherits name="com.smartgwt.Drawing" />
+	<inherits name="com.smartgwt.Charts" />
+	<inherits name="com.smartgwt.Analytics" />
+	<inherits name="com.smartgwt.RealtimeMessaging" />
+	<inherits name="com.smartgwtee.tools.Tools" />
+	
+	<inherits name="com.smartclient.theme.enterpriseblue.EnterpriseBlue"/>
+	<inherits name="com.smartclient.theme.enterprise.EnterpriseResources" />
+
+	<inherits name="com.google.web.bindery.event.Event" />
+
+	<!-- Other module inherits -->
+
+	<!-- Specify the app entry point class. -->
+	<entry-point class='com.workflow.client.WorkFlow' />
+
+	<!-- Specify the paths for translatable code -->
+	<source path='client' />
+	<source path='shared' />
+
+</module>

@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_cus_add_to_building"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="buttonClicked"
+            android:text="@string/add" />
+
+        <Button
+            android:id="@+id/btn_delete_cus_to_building"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="buttonClicked"
+            android:text="@string/delete" />
+
+        <Button
+            android:id="@+id/btn_save_cus_to_building"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="buttonClicked"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/btn_cancel_cus_to_building"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="buttonClicked"
+            android:text="@string/cancel" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_b_customers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</LinearLayout>

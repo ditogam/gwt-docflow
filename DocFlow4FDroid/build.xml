@@ -1,0 +1,117 @@
+<project name="CallCenter" basedir="." default="default">
+
+	<target name="compilejars">
+		<javac srcdir="" destdir="">
+		</javac>
+	</target>
+	<property file="build.properties">
+	</property>
+	<property name="prjcts_home_dir" value=".." />
+	<property name="ms_src_dir" value="src" />
+	<path id="classpath">
+		<pathelement location="src" />
+		<!-- So that we can get jndi.properties for InitialContext -->
+		<fileset dir="war/WEB-INF/lib/">
+			<include name="*.jar" />
+		</fileset>
+		<!--<fileset dir="war/WEB-INF/classes/">
+			<include name="*.*" /> 
+		</fileset>-->
+
+	</path>
+
+
+
+	<target name="jars" description="Package up the module project and required projects as jars">
+		<delete file="src/log4j.isc.config.xml" />
+		<delete file="src/log4j.properties" />
+		<delete file="src/server.properties" />
+		<delete file="war/WEB-INF/classes/log4j.isc.config.xml" />
+		<delete file="war/WEB-INF/classes/log4j.properties" />
+		<copy file="production/log4j.isc.config.xml" tofile="src/log4j.isc.config.xml" />
+		<copy file="production/log4j.properties" tofile="src/log4j.properties" />
+		<copy file="production/server.properties" tofile="src/server.properties" />
+		<delete file="war/WEB-INF/lib/DocFlow.jar" />
+		<delete file="war/WEB-INF/lib/CommonLibray.jar" />
+		<delete dir="war/WEB-INF/classes" />
+		<mkdir dir="war/WEB-INF/classes" />
+		<delete dir="${prjcts_home_dir}/CommonLibray/bin" />
+		<mkdir dir="${prjcts_home_dir}/CommonLibray/bin" />
+		<delete dir="${prjcts_home_dir}/DocFlow/bin" />
+		<mkdir dir="${prjcts_home_dir}/DocFlow/bin" />
+		<delete file="war/WEB-INF/lib/DocFlow.jar" />
+		<delete file="war/WEB-INF/lib/CommonLibray.jar" />
+
+		<copy todir="${prjcts_home_dir}/CommonLibray/bin">
+			<fileset dir="${prjcts_home_dir}/CommonLibray/src">
+				<!--<exclude name="**/*.java" />-->
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+		<javac srcdir="${prjcts_home_dir}/CommonLibray/src" destdir="${prjcts_home_dir}/CommonLibray/bin" debug="on" deprecation="on" optimize="off" includes="**">
+			<classpath refid="classpath" />
+		</javac>
+
+
+
+		<jar destfile='war/WEB-INF/lib/zzzCommonLibray.jar'>
+			<fileset dir="${prjcts_home_dir}/CommonLibray/bin">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+
+		<copy todir="${prjcts_home_dir}/DocFlow/bin">
+			<fileset dir="${prjcts_home_dir}/DocFlow/src">
+				<!--<exclude name="**/*.java" />-->
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+
+		<echo message="${build.classpath}" />
+		<javac srcdir="${prjcts_home_dir}/DocFlow/src" destdir="${prjcts_home_dir}/DocFlow/bin" debug="on" deprecation="on" optimize="off" includes="**">
+			<classpath refid="classpath" />
+		</javac>
+
+
+		<jar destfile='war/WEB-INF/lib/zzzDocFlow.jar'>
+			<fileset dir="${prjcts_home_dir}/DocFlow/bin">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+
+
+
+	</target>
+	<property name="gwt.module.id" value="com.docflow.DocFlow" />
+	<target name="gwt-compile" description="Compile to JavaScript" depends="jars">
+		<java classname="com.google.gwt.dev.Compiler" fork="yes" failonerror="true" maxmemory="${gwt_memorie}">
+			<arg value="-localWorkers" />
+			<arg value="2" />
+			<classpath refid="classpath" />
+			<arg value="-style" />
+			<arg value="OBFUSCATED" />
+			<arg value="${gwt.module.id}" />
+		</java>
+	</target>
+	<target name="default" depends="buildwar,deploy">
+	</target>
+	<!--<target name="buildwar" depends="gwt-compile">-->
+	<target name="buildwar" depends="jars">
+		<delete file="DocFlow.war" />
+		<war basedir="war" destfile="DocFlow.war" webxml="war/WEB-INF/web.xml" />
+
+
+		<delete>
+			<fileset dir="war/WEB-INF/lib">
+				<include name="**/zzz*.*" />
+			</fileset>
+		</delete>
+
+	</target>
+	<target name="deploy">
+		<copy file="development/log4j.isc.config.xml" tofile="src/log4j.isc.config.xml" />
+		<copy file="development/log4j.properties" tofile="src/log4j.properties" />
+		<copy file="development/server.properties" tofile="src/server.properties" />
+		<copy file="DocFlow.war" todir="." />
+	</target>
+</project>

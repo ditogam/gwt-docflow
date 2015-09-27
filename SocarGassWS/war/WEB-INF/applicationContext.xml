@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<!-- Job Classes -->
+	<!-- Check activeConnections -->
+
+	<bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean">
+		<property name="scheduledTimerTasks">
+			<list>
+				<!-- see the example above -->
+				<ref bean="scheduledTask" />
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="checkActiveConnections" class="com.socarmap.server.tasks.TilesChecker">
+	</bean>
+	<!-- Check activeConnections -->
+
+
+	<!-- Job Classes -->
+
+	<!-- Check activeConnections -->
+	<bean id="scheduledTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+		<!-- wait 10 seconds (10000 millisecond) before starting repeated execution -->
+		<property name="delay" value="100" />
+		<!-- run every 5 second (1000 millisecond) -->
+		<property name="period" value="50000" />
+		<property name="timerTask" ref="checkActiveConnections" />
+	</bean>
+	<!-- Check activeConnections -->
+
+
+</beans>  

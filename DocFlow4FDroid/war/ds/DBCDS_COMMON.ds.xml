@@ -1,0 +1,81 @@
+<DataSource dropExtraFields="false" ID="DBCDS_COMMON"
+	serverType="sql" tableName="customer">
+	<fields>
+		<field name="cusid" type="integer" title="Customer ID"
+			primaryKey="true" width="100" />
+		<field name="cusname" type="text" title="Customer Name" width="100" />
+		<field name="phone" type="text" title="Sub Region" width="100" />
+	</fields>
+
+	<operationBindings>
+		<operationBinding operationType="fetch" operationId="getSubregions">
+			<selectClause> <![CDATA[ 
+					cusid, cusname||'dddddddd' cusname, 'kkkk'
+				]]>
+			</selectClause>
+			<tableClause>
+				customer s
+			</tableClause>
+			<whereClause><![CDATA[
+			  1=1
+			    #if($criteria.cusid)
+						and cusid=$criteria.cusid 
+				#else
+				 and cusid=11111
+				#end
+				]]>
+			</whereClause>
+		</operationBinding>
+
+
+		<operationBinding operationType="fetch" operationId="getMetterValue">
+			<selectClause> <![CDATA[ 
+					m.cusid,mtypeid,start_index,meterid,metserial,regdate,mstatusid,(select d.newval  from docmeter d where d.lastindex = 1 and d.meterid=m.meterid) mettervalue
+				]]>
+			</selectClause>
+			<tableClause>
+				meter m
+			</tableClause>
+			<whereClause><![CDATA[
+				 m.meterid=$criteria.metterid				
+				]]>
+			</whereClause>
+		</operationBinding>
+		<operationBinding operationType="fetch" operationId="getMetterPlombs">
+			<selectClause> <![CDATA[ 
+					*
+				]]>
+			</selectClause>
+			<tableClause>
+				v_plomb
+			</tableClause>
+			<whereClause><![CDATA[
+				 meterid=$criteria.metterid				
+				]]>
+			</whereClause>
+		</operationBinding>
+		<operationBinding operationType="fetch"
+			operationId="getDublicatedMetters">
+			<selectClause> <![CDATA[ 
+					*
+				]]>
+			</selectClause>
+			<tableClause>feeder.v_dublicated_metters</tableClause>
+			<whereClause><![CDATA[
+				1=1
+				 #if($criteria.metserial)
+				 	#if($criteria.metserial.length()>4)
+					and lower(metserial) = lower(trim($criteria.metserial))
+					#else
+					 and 1=2
+					#end
+				#else
+				 and 1=2
+				#end
+				
+				
+				]]></whereClause>
+		</operationBinding>
+
+	</operationBindings>
+</DataSource> 

@@ -1,0 +1,30 @@
+<DataSource ID="ReaderListDescDS" serverType="sql"
+	tableName="v_readerlistdevice_live" dbName="Gass">
+
+	<fields>
+	    <field name="chdate" type="datetime" title="Server Name" />
+		<field name="pcityname" type="text" title="Server Name" />
+		<field name="cityname" type="text" title="Server Name" />
+		<field name="zone" type="text" title="Server Name" />
+		<field name="readername" type="text" title="Server Name" />
+		<field name="username" type="text" title="Server Name" />
+		<field name="custypename" type="text" title="Server Name" />
+	</fields>
+
+	<operationBindings>
+		<!-- FETCH -->
+
+		<operationBinding operationType="fetch">
+			<customSQL>
+			  select chdate,r.zone,c.cityname,p.pcityname,readerdate,readername,username, cstp.custypename,cstp.custypeid
+				 from readerlist r 
+				 left join customer cus on cus.cusid=r.cusid 
+				 left join streets s on s.streetid=r.streetid 
+				 left join city c on c.cityid=s.cityid 
+				 left join pcity p on p.pcityid=c.pcityid 
+				 left join custype cstp on cstp.custypeid=cus.custypeid 
+			  where listnum=$criteria.listnum limit 1 
+  			</customSQL>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="ResponcibilitiesDS" serverType="sql"
+	tableName="responcibilities" dbName="HR">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" />
+		<field name="item_id" type="integer" title="Name111" />
+		<field name="item_type_id" type="integer" title="Name111" />
+		<field name="resp_type_id" type="integer" title="Name111" />
+		<field name="description_id" type="integer" title="Name111" />
+		<field name="description" type="text" title="Name111" />
+		<field name="resp_type_name" type="text" title="Name111" />
+	</fields>
+
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="id,item_id,item_type_id,resp_type_id,description_id,description,resp_type_name">
+			<selectClause> <![CDATA[ 
+				id,item_id,item_type_id,resp_type_id,description_id,getcaption(COALESCE(description_id,-1),]]><![CDATA[ 
+					#if($criteria.language_id)
+						$criteria.language_id
+					#elseif($values.language_id)
+						$values.language_id
+					#end
+				]]>
+				<![CDATA[-0,description) description,getresp_type_name(resp_type_id,]]><![CDATA[ 
+					#if($criteria.language_id)
+						$criteria.language_id
+					#elseif($values.language_id)
+						$values.language_id
+					#end
+				]]>
+				<![CDATA[-0) resp_type_name ]]>
+			</selectClause>
+			<tableClause>
+				responcibilities
+			</tableClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

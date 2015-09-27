@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/m_my_location"
+        android:title="@string/my_location"/>
+    <item
+        android:id="@+id/m_en_dis_zoom"
+        android:title="@string/disable_enable_motion">
+    </item>
+    <item
+        android:id="@+id/m_m_barcode"
+        android:title="@string/scan_customer_barcode">
+    </item>
+    <item
+        android:id="@+id/m_search"
+        android:title="@string/search">
+    </item>
+    
+</menu>

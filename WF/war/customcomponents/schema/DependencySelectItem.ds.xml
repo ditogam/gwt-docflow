@@ -1,0 +1,9 @@
+<DataSource ID="DependencySelectItem" inheritsFrom="SelectItem"
+	Constructor="DependencySelectItem">
+	<fields>
+		<field title="Dependency" name="dependency" type="text"
+			editorType="DependencyEditor" basic="true" group="basics"
+			xmlAttribute="true" />
+
+	</fields>
+</DataSource>

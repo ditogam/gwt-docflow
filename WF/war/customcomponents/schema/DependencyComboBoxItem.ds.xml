@@ -1,0 +1,7 @@
+<DataSource ID="DependencyComboBoxItem" inheritsFrom="ComboBoxItem"
+	Constructor="DependencyComboBoxItem">
+	<fields>
+		<field xmlAttribute="true" title="Dependency" name="dependency"
+			type="text" editorType="DependencyEditor" basic="true" group="basics" />
+	</fields>
+</DataSource>

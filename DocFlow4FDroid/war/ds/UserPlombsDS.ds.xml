@@ -1,0 +1,36 @@
+<DataSource ID="UserPlombsDS" serverType="sql"
+	tableName="feeder.v_user_plombs">
+	<fields>
+		<field name="id" type="sequence" title="id" hidden="true"
+			primaryKey="true" sequenceName="pt_user_plomb_id_seq"/>
+		<field name="userid" type="integer" title="User ID" hidden="true"/>
+		<field name="color_name" type="text" title="Color" />
+		<field name="distributor_name" type="text" title="Distributor" />
+		<field name="color_id" type="integer" title="User ID" hidden="true"/>
+		<field name="distributor_id" type="integer" hidden="true"/>
+		<field name="min_value" type="integer" title="Min value" align="center"/>
+		<field name="max_value" type="integer" title="Max value" align="center"/>
+	</fields>
+	<serverObject lookupStyle="new"
+		className="com.docflow.server.docflow.UserPlombDMI" />
+	<operationBindings>
+		<operationBinding operationType="add" operationId="addUserPlomb" serverMethod="addEditUserPlomb">
+            <serverObject lookupStyle="new" className="com.docflow.server.docflow.UserPlombDMI"/>
+        </operationBinding>
+        
+        <!-- Update Abonent -->
+		<operationBinding operationType="update" operationId="updateUserPlomb" serverMethod="addEditUserPlomb">
+            <serverObject lookupStyle="new" className="com.docflow.server.docflow.UserPlombDMI"/>
+        </operationBinding>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch">
+			<selectClause> <![CDATA[ 
+					*
+				]]>
+			</selectClause>
+			<tableClause>
+				feeder.v_user_plombs
+			</tableClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

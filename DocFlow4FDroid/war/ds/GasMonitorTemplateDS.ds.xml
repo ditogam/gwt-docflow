@@ -1,0 +1,12 @@
+<DataSource ID="GasMonitorTemplateDS" serverType="sql"
+	tableName="gasmonitor.monitor_template" dbName="MAP">
+	<fields>
+		<field name="mtemplate_id" type="sequence" title="id" hidden="true"
+			primaryKey="true" sequenceName="gasmonitor.monitor_template_mtemplate_id_seq" />
+		<field name="mtemplate_name" type="text" title="Color" />
+		<field name="mtemplatedata" type="text" title="Distributor" />
+		<field name="user_id" type="integer" title="Color" />
+		
+	</fields>
+
+</DataSource>

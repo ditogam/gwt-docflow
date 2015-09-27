@@ -1,0 +1,137 @@
+/** Add css rules here for your application. */
+.map-widget-borderbox>div>div>div {
+	width: 100%;
+	height: 100%;
+}
+
+/** Example rules used by the template application (remove for your app) */
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	color: #777777;
+	margin: 40px 0px 70px;
+	text-align: center;
+}
+
+.sendButton {
+	display: block;
+	font-size: 16pt;
+}
+
+/** Most GWT widgets already have a style name defined */
+.gwt-DialogBox {
+	width: 400px;
+}
+
+.dialogVPanel {
+	margin: 5px;
+}
+
+.serverResponseLabelError {
+	color: red;
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+	margin: 15px 6px 6px;
+}
+
+.myHighGridCell,.myHighGridCellDark {
+	background-color: #FFC0C0;
+	border-bottom: 1px solid #FFC0C0;
+	border-top: 1px solid #FFC0C0;
+	color: black;
+	font-family: Verdana, Bitstream Vera Sans, sans-serif;
+	font-size: 11px;
+	text-overflow: ellipsis;
+}
+
+.myHighGridCellOver,.myHighGridCellOverDark {
+	background-color: #FFE0E0;
+	border-bottom: 1px solid #C0C0C0;
+	border-top: 1px solid #C0C0C0;
+	color: black;
+	font-family: Verdana, Bitstream Vera Sans, sans-serif;
+	font-size: 11px;
+	text-overflow: ellipsis;
+}
+
+.myHighGridCellSelected,.myHighGridCellSelectedDark {
+	background-color: #FFC0FF;
+	border-bottom: 1px solid #FFC0FF;
+	border-top: 1px solid #FFC0FF;
+	color: black;
+	font-family: Verdana, Bitstream Vera Sans, sans-serif;
+	font-size: 11px;
+	text-overflow: ellipsis;
+}
+
+.myHighGridCellSelectedOver,.myHighGridCellSelectedOverDark {
+	background-color: #FFE0FF;
+	border-bottom: 1px solid #A0A0A0;
+	border-top: 1px solid #A0A0A0;
+	color: black;
+	font-family: Verdana, Bitstream Vera Sans, sans-serif;
+	font-size: 11px;
+	text-overflow: ellipsis;
+}
+
+.myHighGridCellDisabled,.myHighGridCellDisabledDark {
+	background-color: #FFC0C0;
+	border-bottom: 1px solid #FFC0C0;
+	border-top: 1px solid #FFC0C0;
+	color: #808080;
+	font-family: Verdana, Bitstream Vera Sans, sans-serif;
+	font-size: 11px;
+	text-overflow: ellipsis;
+}
+
+.myLowGridCell,.myLowGridCellDark {
+	background-color: #C0FFC0;
+	border-bottom: 1px solid #C0FFC0;
+	border-top: 1px solid #C0FFC0;
+	color: black;
+	font-family: Verdana, Bitstream Vera Sans, sans-serif;
+	font-size: 11px;
+	text-overflow: ellipsis;
+}
+
+.myLowGridCellOver,.myLowGridCellOverDark {
+	background-color: #E0FFE0;
+	border-bottom: 1px solid #C0C0C0;
+	border-top: 1px solid #C0C0C0;
+	color: black;
+	font-family: Verdana, Bitstream Vera Sans, sans-serif;
+	font-size: 11px;
+	text-overflow: ellipsis;
+}
+
+.myLowGridCellSelected,.myLowGridCellSelectedDark {
+	background-color: #C0FFFF;
+	border-bottom: 1px solid #C0FFFF;
+	border-top: 1px solid #C0FFFF;
+	color: black;
+	font-family: Verdana, Bitstream Vera Sans, sans-serif;
+	font-size: 11px;
+	text-overflow: ellipsis;
+}
+
+.myLowGridCellSelectedOver,.myLowGridCellSelectedOverDark {
+	background-color: #E0FFFF;
+	border-bottom: 1px solid #A0A0A0;
+	border-top: 1px solid #A0A0A0;
+	color: black;
+	font-family: Verdana, Bitstream Vera Sans, sans-serif;
+	font-size: 11px;
+	text-overflow: ellipsis;
+}
+
+.myLowGridCellDisabled,.myLowGridCellDisabledDark {
+	background-color: #C0FFC0;
+	border-bottom: 1px solid #C0FFC0;
+	border-top: 1px solid #C0FFC0;
+	color: #808080;
+	font-family: Verdana, Bitstream Vera Sans, sans-serif;
+	font-size: 11px;
+	text-overflow: ellipsis;
+}

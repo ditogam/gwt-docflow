@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="Compiler" basedir="." default="default">
+	<property name="gwt_dir" value="../gwt" />
+	<property name="gwt_dir_abs" location="${gwt_dir}" />
+	<path id="classpath_ref">
+		<!-- So that we can get jndi.properties for InitialContext -->
+		<fileset dir="lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${gwt_dir}">
+			<include name="**/gwt-user.jar" />
+		</fileset>
+	</path>
+
+	<property name="classpath" refid="classpath_ref" />
+
+
+
+	<target name="print_jars">
+		<pathconvert property="manifest.classpath" pathsep=" ">
+			<path refid="classpath_ref" />
+			<map from="${user.dir}/lib" to="./gwt_libs" />
+			<map from="${gwt_dir_abs}" to="./gwt_libs/gwt" />
+		</pathconvert>
+
+	</target>
+	<target name="create_manifest" depends="print_jars">
+		<delete dir="man_jar">
+		</delete>
+		<mkdir dir="man_jar" />
+		<jar jarfile="man_jar/docflow_jars.jar">
+			<manifest>
+				<attribute name="Class-Path" value="${manifest.classpath}" />
+			</manifest>
+		</jar>
+		<echo message="${manifest.classpath}" />
+	</target>
+	<target name="default" description="Default" depends="create_manifest">
+
+	</target>
+</project>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+    languageid="1"
+    systemid="1" >
+
+    <servers>
+
+        <server
+            active="true"
+            servername="socar_241"
+            serverurl="http://10.90.200.241:8787/DocFlow/XDocFlowService" />
+    </servers>
+
+</config>

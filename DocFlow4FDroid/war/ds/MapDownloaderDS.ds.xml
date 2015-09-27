@@ -1,0 +1,115 @@
+<DataSource ID="MapDownloaderDS" serverType="sql" tableName="v_banklive"
+	dbName="MAP">
+	<fields>
+		<field name="bankid" type="integer" title="Bankid" primaryKey="true" />
+	</fields>
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationId="getBuildings"
+			operationType="fetch">
+
+			<customSQL>
+				<![CDATA[ select 
+				#if($criteria.cnt)
+					count(1) cnt
+				#else
+					buid, astext(transform(the_geom,4326))
+					geom_text,
+					senobis_no,
+					astext(transform(lcentroid,4326))
+					lcentroid_text,
+					has_customers
+				#end
+				from
+				buildings where
+				raiid=$criteria.subregion_id
+				#if($criteria.updatetime)
+					and updated>$criteria.updatetime
+				#end]]>
+			</customSQL>
+		</operationBinding>
+
+		<operationBinding operationId="getRoads"
+			operationType="fetch">
+			<customSQL>
+				<![CDATA[ select 
+				#if($criteria.cnt)
+					count(1) cnt
+				#else
+					ruid, rname,
+					astext(transform(the_geom,4326))
+					geom_text 
+				#end
+				from roads where
+				raiid=$criteria.subregion_id
+				#if($criteria.updatetime)
+					and updated>$criteria.updatetime
+				#end]]>
+			</customSQL>
+		</operationBinding>
+
+
+		<operationBinding operationId="getMapInfo"
+			operationType="fetch">
+
+			<customSQL>
+				<![CDATA[ select subregion_id id,region_id,
+				astext(transform(the_geom,4326))
+				geom_text,
+				astext(transform(globals.st_subregion_centroid(subregion_id),4326))
+				lcentroid_text,distr_geo, now() last_updated
+				from subregions where
+				the_geom
+				is
+				not null and
+				subregion_id
+				=$criteria.subregion_id]]>
+			</customSQL>
+		</operationBinding>
+
+
+		<operationBinding operationId="getSettlements"
+			operationType="fetch">
+			<customSQL>
+				<![CDATA[ select id, astext(transform(the_geom,4326))
+				geom_text
+				from
+				maps.settlements where subregion_id
+				=$criteria.subregion_id]]>
+			</customSQL>
+		</operationBinding>
+		<operationBinding operationId="getDistrict_meters"
+			operationType="fetch">
+
+			<customSQL>
+				<![CDATA[ select #if($criteria.cnt)
+					count(1) cnt
+				#else
+					cusid, astext(transform(the_geom,4326))
+					geom_text
+				#end
+				from district_meters where raiid=$criteria.subregion_id
+				#if($criteria.updatetime)
+				and updated>$criteria.updatetime]]>
+				#end
+			</customSQL>
+		</operationBinding>
+
+		<operationBinding operationId="getSubregionForMap"
+			operationType="fetch">
+			<customSQL>
+				<![CDATA[ select case when sm.subregion_id is null then
+				sr.subregion_id else sm.subregion_id end subregion_id
+				from (select
+				$criteria.subregion_id subregion_id) sr
+				LEFT JOIN
+				maps.subregion_mappings sm ON sm.real_subregion_id =
+				sr.subregion_id]]>
+			</customSQL>
+		</operationBinding>
+
+
+
+
+	</operationBindings>
+</DataSource>

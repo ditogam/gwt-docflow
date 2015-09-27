@@ -1,0 +1,27 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<DataSource dropExtraFields="false" ID="CaptionsDS"
+	serverType="sql" tableName="captions">
+	<fields>
+		<field name="id" type="integer" primaryKey="true" />
+		<field name="language_1" title="Georgian" type="text" />
+		<field name="language_2" title="English" type="text" />
+		<field name="language_3" title="Russian" type="text" />
+
+	</fields>
+	<operationBindings>
+		<operationBinding operationType="fetch">
+			<selectClause> <![CDATA[id ,language_1,language_2,language_3  ]]>
+			</selectClause>
+			<tableClause> <![CDATA[ (select id ,getcaption(id,1) language_1,getcaption(id,2) language_2,getcaption(id,3) language_3    from captions group by id) captions ]]></tableClause>
+		</operationBinding>
+		<operationBinding operationType="fetch" operationId="fetchAddEditCaption">
+			<customSQL>
+			<![CDATA[select addEditCaption( $criteria.id, Array[HSTORE('lang_id','1')||HSTORE('val',$criteria.language_1),HSTORE('lang_id','2')||HSTORE('val',$criteria.language_2),HSTORE('lang_id','3')||HSTORE('val',$criteria.language_3)]::hstore[]  ) id ,$criteria.language_1 language_1,$criteria.language_2 language_2,$criteria.language_3 language_3   ]]>
+			</customSQL>
+		</operationBinding>
+
+
+
+	</operationBindings>
+
+</DataSource>

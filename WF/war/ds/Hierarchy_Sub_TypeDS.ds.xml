@@ -1,0 +1,20 @@
+<DataSource dropExtraFields="false" ID="Hierarchy_Sub_TypeDS"
+	serverType="sql" tableName="hierarchy_sub_type">
+	<fields>
+		<field name="uid" type="sequence" title="ID" primaryKey="true"
+			sequenceName="hierarchy_sub_type_uid_seq" hidden="true" />
+		<field name="id" type="integer" title="ID" width="50" />
+		<field name="hierarchy_type_id" type="integer" title="ID"
+			foreignKey="Hierarchy_TypeDS.id" hidden="true" />
+		<field name="common_name" title="Common name" type="text" width="200" />
+		<field name="caption_id" title="Caption" type="integer" hidden="true" />
+		<field name="caption" title="Caption" type="text"
+			customSelectExpression="getcaption(caption_id,$session.language_id)" />
+		<field name="img_id" title="Picture" type="integer" hidden="true" />
+		<field name="img_url" title="Picture" type="image"
+			customSelectExpression="img_id" imageURLPrefix="getimage.jsp?id="
+			imageURLSuffix="" width="150" file_types="image/*" />
+		<field name="external_type_id" title="External type id" type="integer"
+			width="150" />
+	</fields>
+</DataSource>

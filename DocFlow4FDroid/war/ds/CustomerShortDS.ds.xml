@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="CustomerShortDS" serverType="sql"
+    tableName="v_customer_simple">
+    <fields>
+	<field name="cusid" type="integer" title="ID" primaryKey="true"
+	    width="100" />
+	<field name="cusname" type="text" title="Name" width="100" />
+	<field name="combined" type="text" title="Name" width="100" />
+	<field name="zone" type="text" title="Zone" width="100" />
+    </fields>
+    <operationBindings>
+	<operationBinding operationType="fetch">
+	    <whereClause>
+	<![CDATA[
+	   1=1
+	   #if($criteria.cusids) 
+             and (cusid =ANY (string_to_array($criteria.cusids,',')::bigint[]))
+           #end
+           #if($criteria.notcusids) 
+	    and (cusid not in (select unnest(string_to_array($criteria.notcusids,','))::bigint))
+           #end
+	   #if($criteria.cusid) 
+             and (cusid::text like $criteria.cusid||'%')
+           #end
+           #if($criteria.cusname) 
+             and (cusname like '%'||$criteria.cusname||'%')
+           #end
+           #if($criteria.raiid) 
+             and (raiid =$criteria.raiid)
+           #end
+            #if($criteria.zone)
+             and (zone::text like $criteria.zone||'%')
+           #end
+           #if($criteria.buid)
+             and (buid is not null)
+           #end
+          ]]>
+	    </whereClause>
+	</operationBinding>
+
+	<operationBinding operationType="fetch" operationId="getZones">
+	    <selectClause>
+		<![CDATA[ 
+		    distinct zone
+		]]>
+	    </selectClause>
+	    <whereClause>
+		<![CDATA[
+		   1=1
+		   #if($criteria.cusids) 
+	             and (cusid =ANY (string_to_array($criteria.cusids,',')::bigint[]))
+	           #end
+	           #if($criteria.notcusids) 
+			and (cusid not in (select unnest(string_to_array($criteria.notcusids,','))::bigint))
+	           #end
+		   #if($criteria.cusid) 
+	             and (cusid::text like $criteria.cusid||'%')
+	           #end
+	           #if($criteria.cusname) 
+	             and (cusname like '%'||$criteria.cusname||'%')
+	           #end
+	           #if($criteria.raiid) 
+	             and (raiid =$criteria.raiid)
+	           #end
+	           #if($criteria.zone)
+            	    and (zone::text like $criteria.zone||'%')
+        	   #end
+	           #if($criteria.buid)
+	             and (buid is not null)
+	           #end
+	          ]]>
+	    </whereClause>
+	</operationBinding>
+    </operationBindings>
+</DataSource>

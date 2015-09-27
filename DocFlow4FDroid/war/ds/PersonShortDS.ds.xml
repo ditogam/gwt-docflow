@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="PersonShortDS" serverType="sql" tableName="person"
+	dbName="HR">
+	<fields>
+		<field name="person_id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" />
+		<field name="person_name" type="text" title="Name111" />
+
+	</fields>
+
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="person_id,person_name">
+			<selectClause> <![CDATA[ 
+				person_id,getperson_name(person_id,$criteria.language_id) as person_name]]>
+			</selectClause>
+			<tableClause>
+				person
+			</tableClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

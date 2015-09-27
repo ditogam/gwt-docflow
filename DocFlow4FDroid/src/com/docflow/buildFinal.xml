@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="ImageViewer" default="all"
+	basedir="C:/Users/User/workspace/DocFlow">
+	<property name="war.name" value="DocFlow.war" />
+	<property name="lib.dir" location="lib" />
+	<path id="project.classpath">
+
+		<!-- include Tomcat libraries -->
+		<fileset dir="${lib.dir}/nanoxml">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}/openlayers">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}/smartgwt3.1">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}/gwt">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<pathconvert property="manifest.classpath" dirsep="/"
+		pathsep=" " refid="project.classpath">
+		<map from="${lib.dir}" to="." />
+	</pathconvert>
+
+
+
+
+	<target name="createWarDir">
+
+
+
+		<jar destfile="docflow_jars3.1.jar">
+			<manifest>
+				<attribute name="Class-Path" value="${manifest.classpath}" />
+			</manifest>
+		</jar>
+
+		
+		<copydir src="src" dest="war1/WEB-INF/classes" />
+		<copydir src="../CommonLibray/src" dest="war1/WEB-INF/classes" />
+		<copydir src="../CommonLibray/bin" dest="war1/WEB-INF/classes" />
+		<copydir src="production" dest="war1/WEB-INF/classes" />
+	</target>
+	<target name="war" depends="createWarDir">
+		<delete file="${war.name}" />
+		<jar destfile="${war.name}" basedir="war1" duplicate="preserve" />
+		<delete includeEmptyDirs="true">
+			<fileset dir="war1" casesensitive="false">
+
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="deploy" depends="war">
+		<move file="war1" todir="C:/Users/User/workspace/DocFlow" />
+	</target>
+
+	<target name="all" depends="deploy" />
+
+</project>

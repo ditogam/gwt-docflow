@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="PersonEducationDS" serverType="sql"
+	tableName="person_education" dbName="HR">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" />
+		<field name="person_id" type="integer" title="ID" hidden="true" />
+		<field name="education_name_and_place" type="text"
+			title="სასწავლებლის სახელწოდება" />
+		<field name="faculty" type="text" title="ფაკულტეტი" />
+		<field name="enter_year" type="integer" title="შესვლის წ." />
+		<field name="greduate_year" type="integer" title="დამთავრების წ." />
+		<field name="leave_grade" type="integer" title="გამოსვლის კურსი" />
+		<field name="greduate_degree_certificate_num" type="text"
+			title="სპეციალობა და დიპლომის #" />
+
+	</fields>
+
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="id,person_id,education_name_and_place,faculty,enter_year,greduate_year,leave_grade,greduate_degree_certificate_num">
+			<selectClause> <![CDATA[ 
+				id,person_id,education_name_and_place,faculty,enter_year,
+				greduate_year,leave_grade,greduate_degree_certificate_num ]]>
+			</selectClause>
+			<tableClause>
+				person_education
+			</tableClause>
+			<whereClause>
+				<![CDATA[ 
+					#if($criteria.person_id)
+						person_id=$criteria.person_id
+						and
+					#end
+					1=1
+				]]>
+			</whereClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

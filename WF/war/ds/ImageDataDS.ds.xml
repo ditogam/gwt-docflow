@@ -1,0 +1,12 @@
+<DataSource dropExtraFields="false" ID="ImageDataDS"
+	serverType="sql" tableName="image_data">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" sequenceName="image_data_id_seq" />
+		<field name="bdata" title="სურათი" type="binary" />
+		<field name="bdata_filename" title="სურათი" type="text" />
+		<field name="bdata_filesize" title="სურათი" type="integer" />
+		<field name="bdata_date_created" title="სურათი" type="datetime" />
+		<field name="bdata_contenttype" title="სურათი" type="text" />
+	</fields>
+</DataSource>

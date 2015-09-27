@@ -1,0 +1,11 @@
+<DataSource dropExtraFields ="false" ID="ImageDS" serverType="generic">
+	<fields>
+		<field name="id" type="integer" title="ID" primaryKey="true"
+			hidden="true" />
+		<field name="imageInputStream" title="სურათი" type="imageFile"
+			required="false" showFileInline="true" />
+		<field name="imgname" type="text" title="სახელი" />
+	</fields>
+
+	<serverObject lookupStyle="new" className="com.docflow.server.ImageStore" />
+</DataSource>

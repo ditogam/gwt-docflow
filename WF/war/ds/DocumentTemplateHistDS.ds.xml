@@ -1,0 +1,16 @@
+<DataSource dropExtraFields="false" ID="DocumentTemplateHistDS"
+	serverType="sql" tableName="document_templates_hist">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			sequenceName="document_templates_hist_id_seq" width="50" />
+		<field name="doc_template_id" title="External id" type="integer" />
+		<field name="template_name" title="Caption" type="text" />
+		<field name="description" title="Description" type="text" />
+		<field name="js_code" title="Description" type="text" />
+		<field name="xml_code" title="Description" type="text" />
+		<field name="custom_js_code" title="Description" type="text" />
+		<field name="time_creation" title="External id" type="datetime"
+			customSelectExpression="to_char(time_creation, 'DD/MM/YY HH:MI:SS')" />
+		<field name="last_user_id" title="External id" type="integer" />
+	</fields>
+</DataSource>

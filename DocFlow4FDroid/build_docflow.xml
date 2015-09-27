@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="Compiler" basedir="." default="default">
+	<property file="build_docflow.properties" />
+	<property name="target" value="1.5" />
+	<property name="war.classes" value="war/WEB-INF/classes" />
+	<property name="commonjar" value="common.jar" />
+	<path id="classpath_ref">
+		<!-- So that we can get jndi.properties for InitialContext -->
+		<fileset dir="lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${gwt_dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement location="${war.classes}" />
+	</path>
+
+	<property name="classpath" refid="classpath_ref" />
+
+
+	<condition property="isTomcat">
+		<isset property="tomcat_build" />
+	</condition>
+
+	<target name="tomcat.build" if="isTomcat">
+		<delete file="${war.classes}/server.properties" />
+		<copy file="production_tomcat/server.properties" todir="${war.classes}" />
+		<mkdir dir="war/WEB-INF/lib" />
+		<copy file="${gwt_dir}/gwt-servlet.jar" todir="war/WEB-INF/lib" />
+		<copy file="${gwt_dir}/gwt-user.jar" todir="war/WEB-INF/lib" />
+		<copy file="${gwt_dir}/validation-api-1.0.0.GA.jar" todir="war/WEB-INF/lib" />
+	</target>
+
+
+	<target name="prepare" description="Default">
+		<delete dir="war/docflow" />
+		<delete dir="war/WEB-INF/deploy" />
+		<delete dir="war/WEB-INF/lib" />
+		<delete dir="${war.classes}" />
+		<mkdir dir="${war.classes}" />
+		<!--<echo message="${classpath}" />-->
+		<copy todir="${war.classes}" overwrite="true">
+			<fileset dir="../CommonLibray/src" includes="**" />
+			<fileset dir="../SocarGassWS/xremoting" includes="**" />
+			<fileset dir="src" includes="**" />
+		</copy>
+		<copy todir="${war.classes}" overwrite="true">
+			<fileset dir="production" includes="**" />
+		</copy>
+		<delete>
+			<fileset dir="${war.classes}" includes="**/*.class" />
+		</delete>
+
+		<javac includeantruntime="false" destdir="${war.classes}" debug="on" debuglevel="lines,vars,source" verbose="false" deprecation="off" optimize="on" includes="**" source="${target}" target="${target}">
+			<compilerarg value="-Xlint:unchecked" />
+			<classpath refid="classpath_ref" />
+			<src path="${war.classes}" />
+		</javac>
+	</target>
+	<property name="gwt.module.id" value="com.docflow.DocFlow" />
+	<target name="gwt_compile" description="Default">
+		<java classname="com.google.gwt.dev.Compiler" fork="yes" failonerror="true" maxmemory="${gwt_memorie}">
+			<arg value="-localWorkers" />
+			<arg value="2" />
+			<classpath refid="classpath_ref" />
+			<arg value="-style" />
+			<arg value="OBFUSCATED" />
+			<arg value="${gwt.module.id}" />
+		</java>
+	</target>
+
+	<target name="war" depends="prepare,tomcat.build,gwt_compile">
+		<delete file="DocFlow.war" />
+		<war destfile="DocFlow.war" webxml="war/WEB-INF/web.xml">
+			<fileset dir="war" />
+		</war>
+	</target>
+	<target name="default" description="Default" depends="war">
+
+	</target>
+</project>

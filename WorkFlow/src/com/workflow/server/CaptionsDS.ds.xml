@@ -1,0 +1,21 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<DataSource dropExtraFields="false" ID="CaptionsDS"
+	serverType="sql" tableName="captions">
+	<fields>
+		<field name="id" type="integer" primaryKey="true" />
+		OTHER_FILED_PROPS
+	</fields>
+	<operationBindings>
+		<operationBinding operationType="fetch">
+			<selectClause> <![CDATA[id OTHER_SELECT_FILEDS  ]]>
+			</selectClause>
+			<tableClause> <![CDATA[ (select id OTHER_FILEDS    from captions group by id) captions ]]></tableClause>
+		</operationBinding>
+		<operationBinding operationType="fetch" operationId="fetchAddEditCaption">
+			<customSQL>
+			<![CDATA[select addEditCaption( $criteria.id, OTHER_UPDATE_FILEDS  ) id OTHER_UPDATETABLE_FILEDS   ]]>
+			</customSQL>
+		</operationBinding>
+	</operationBindings>
+
+</DataSource>

@@ -1,0 +1,90 @@
+<DataSource ID="ReaderListValsDS" serverType="sql"
+	tableName="readerlist_charge" dbName="Gass">
+
+	<fields>
+	    <field name="id" type="integer" title="Server Name" primaryKey="true" />
+	    <field name="streetname" type="text" title="Server Name" />
+	    <field name="home" type="text" title="Server Name" />
+	    <field name="flat" type="text" title="Server Name" />
+	    <field name="cusname" type="text" title="Server Name" />
+	    <field name="cusid" type="integer" title="Server Name" />
+	    <field name="oldval" type="integer" title="Server Name" />
+	    <field name="newval" type="integer" title="Server Name" />
+	    <!-- <field name="oldloan" type="float" title="Server Name" /> -->
+	    <field name="m3k" type="float" title="Server Name" />
+	    <field name="startamount" type="float" title="Server Name" />
+	    <!-- <field name="oldcusid" type="integer" title="Server Name" /> -->
+	    <field name="newdate" type="datetime" title="Server Name" />
+	    <field name="meterid" type="integer" title="Server Name" />
+		<field name="koef" type="float" title="Server Name" />
+		<field name="metserial" type="text" title="Server Name" />
+		<field name="mtypename" type="text" title="Server Name" />
+		<field name="metermax" type="text" title="Server Name" />
+		<field name="userid" type="integer" title="Server Name" />
+		<field name="temp_k" type="float" title="Server Name" />
+	</fields>
+
+	<operationBindings>
+		<!-- OLD FETCH 
+		<operationBinding operationType="fetch">
+			<customSQL>
+			    select streetname,home,flat,phone,cusname,r.cusid,COALESCE(rc.oldval,null,r.oldval) oldval,
+				COALESCE(rc.newval,null,r.newval) newval,COALESCE(rc.koef,null,r.koef) koef, COALESCE(rc.m3,null,r.m3) m3,oldloan,
+				COALESCE(rc.startamount,null,cus.startamount) startamount,
+				newdate,meterid,metserial,mtypename, r.id,metermax,rc.oldcusid
+				 from readerlist r 
+				  left join readerlist_charge rc on rc.id=r.id
+				 left join customer cus on cus.cusid=r.cusid 
+				 left join streets s on s.streetid=r.streetid 
+				 left join city c on c.cityid=s.cityid 
+				 left join pcity p on p.pcityid=c.pcityid 
+				  where 1=1 
+				  #if($criteria.listnum)
+				    and listnum=$criteria.listnum 
+				  #end
+				  #if($criteria.id)
+				    and r.id=$criteria.id 
+				  #end
+				  #if($criteria.ppcityid)
+				    and p.ppcityid=$criteria.ppcityid 
+				  #end
+				  #if($criteria.pcityid)
+				    and p.pcityid=$criteria.pcityid 
+				  #end
+				  order by r.id
+  			</customSQL>
+		</operationBinding>-->
+		<operationBinding operationType="fetch">
+			<customSQL>
+			    select  streetname,home,flat,phone,cusname,r.cusid,r.oldval,
+						r.newval,r.koef, r.m3k,cus.startamount,
+						newdate,meterid,metserial,mtypename, r.id,metermax,r.temp_k
+				 from readerlist r 
+					 left join customer cus on cus.cusid=r.cusid 
+					 left join streets s on s.streetid=r.streetid 
+					 left join city c on c.cityid=s.cityid 
+					 left join pcity p on p.pcityid=c.pcityid 
+				 where r.datesid in (select dt.id from readerlistdates dt where dt.active=1)
+					  #if($criteria.listnum)
+					    and listnum=$criteria.listnum 
+					  #end
+					  #if($criteria.id)
+					    and r.id=$criteria.id 
+					  #end
+					  #if($criteria.ppcityid)
+					    and p.ppcityid=$criteria.ppcityid 
+					  #end
+					  #if($criteria.pcityid)
+					    and p.pcityid=$criteria.pcityid 
+					  #end
+				  order by r.id
+  			</customSQL>
+		</operationBinding>
+				
+		<operationBinding operationType="update"
+			serverMethod="update" allowMultiUpdate="true">
+			<serverObject lookupStyle="new"
+				className="com.docflow.server.docflow.ReaderListDMI" />
+		</operationBinding>
+	</operationBindings>
+</DataSource>

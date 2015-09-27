@@ -1,0 +1,72 @@
+<DataSource ID="PipeLineDS" dbName="MAP" dropExtraFields="false"
+	serverType="sql" tableName="socar_pipelines_final">
+
+	<fields>
+
+		<field name="spl_id" hidden="true" primaryKey="true" title="ID"
+			type="integer" />
+		<field name="feature_text" title="Name111" type="text" />
+		<field name="regid" title="ID" type="integer" />
+		<field name="raiid" title="ID" type="integer" />
+		<field name="srid" title="ID" type="integer" />
+
+	</fields>
+
+
+	<operationBindings>
+		<operationBinding operationId="getPipeLinesById"
+			operationType="fetch">
+			<customSQL>
+	    <![CDATA[
+	    
+	    	select spl_id,astext(transform(the_geom,$criteria.to_srid)) feature_text,round(ST_Length(the_geom)) len,round(diametri) diametri,masala,sp.group_id, lf.title,sp.type,group_name  from socar_pipelines_final sp
+				left join gis_layer_filter lf on lf.type_id=sp.type
+				left join  maps.pipeline_group plg on sp.group_id=plg.group_id
+			where spl_id=$criteria.id 
+			#if($criteria.group_id)
+						or (sp.group_id is not null and sp.group_id=$criteria.group_id)
+			#end
+			
+		]]>
+			</customSQL>
+		</operationBinding>
+
+
+		<operationBinding operationId="selectPipeLinesByPolygon"
+			operationType="fetch">
+			<customSQL>
+	    <![CDATA[
+	    	select spl_id,astext(transform(the_geom,$criteria.to_srid)) feature_text,sp.group_id,round(ST_Length(the_geom)) len, lf.title,sp.type,group_name  from socar_pipelines_final sp
+				left join gis_layer_filter lf on lf.type_id=sp.type
+				left join  maps.pipeline_group plg on sp.group_id=plg.group_id
+			where 
+				#if($criteria.group_id)
+						(sp.group_id is null or sp.group_id=$criteria.group_id) and
+				#end
+				sp.raiid=$criteria.subregionid and
+				sp.type=$criteria.type and
+				ST_intersects(the_geom,
+				ST_transform(ST_GeomFromText($criteria.selection,
+				$criteria.to_srid),$criteria.from_srid))
+		]]>
+			</customSQL>
+		</operationBinding>
+		<operationBinding operationType="fetch" operationId="savePipeLines">
+			<customSQL>
+				select
+				maps.save_pipeline_group($criteria.group_id,$criteria.pipeline_ids,$criteria.group_name,$criteria.subregionid,$criteria.type)
+				cusname
+			</customSQL>
+		</operationBinding>
+
+		<operationBinding operationType="fetch" operationId="getGroupNames">
+			<customSQL>
+				select group_id , group_name,type
+				from maps.pipeline_group
+				where
+				raiid=$criteria.parentId
+			</customSQL>
+		</operationBinding>
+	</operationBindings>
+
+</DataSource>

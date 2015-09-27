@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>MagtiSatWS</display-name>
+
+	<!--CharsetFilter start -->
+
+	<filter>
+		<filter-name>CharsetFilter</filter-name>
+		<filter-class>com.socarmap.server.CharsetFilter</filter-class>
+		<init-param>
+			<param-name>requestEncoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>CharsetFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>/axis2-web/index.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>context</servlet-name>
+		<servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>SocarConnectorService</servlet-name>
+		<servlet-class>no.tornado.brap.servlet.ProxyServlet</servlet-class>
+		<init-param>
+			<param-name>service</param-name>
+			<param-value>com.socarmap.server.WSConnection</param-value>
+		</init-param>
+		<init-param>
+			<param-name>authorizationProvider</param-name>
+			<param-value>no.tornado.brap.auth.AuthenticationNotRequiredAuthorizer</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SocarConnectorService</servlet-name>
+		<url-pattern>/SocarConnectorService</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>XSocarConnectorService</servlet-name>
+		<servlet-class>com.socarmap.server.WSConnection</servlet-class>
+		<init-param>
+			<param-name>exposedInterfaces</param-name>
+			<param-value>com.socarmap.proxy.IConnection</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>XSocarConnectorService</servlet-name>
+		<url-pattern>/XSocarConnectorService</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>XYZRequest</servlet-name>
+		<servlet-class>com.socarmap.server.XYZRequest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>XYZRequest</servlet-name>
+		<url-pattern>/XYZRequest</url-pattern>
+	</servlet-mapping>
+
+	<resource-ref>
+		<description>TileDBCopyProperty</description>
+		<res-ref-name>tilecopy/props</res-ref-name>
+		<res-type>com.socarmap.server.TileDBCopyProperty</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+
+	<resource-ref>
+		<description>DocFlow Datasource</description>
+		<res-ref-name>jdbc/DocFlow</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<resource-ref>
+		<description>Gass Datasource</description>
+		<res-ref-name>jdbc/Gass</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<resource-ref>
+		<description>MAP Datasource</description>
+		<res-ref-name>jdbc/MAP</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+</web-app>

@@ -1,0 +1,34 @@
+<DataSource ID="ReaderListDeviceDS" serverType="sql"
+	tableName="v_readerlistdevice_live">
+	<fields>
+		<field name="id" type="integer" title="#" hidden="true" />
+		<field name="cusid" type="integer" title="Customer#" />
+		<field name="cusname" type="text" title="Customer" />
+		<field name="meterid" type="integer" title="Metter#" />
+		<field name="metserial" type="text" title="Metter Ser#" />
+		<field name="oldval" type="integer" title="Old Value" />
+		<field name="val" type="integer" title="Value" />
+		<field name="newval" type="integer" title="New Value" />
+		<field name="deviceid" type="integer" title="Device" />
+		<field name="pcityid" type="integer" title="A Count" hidden="true" />
+		<field name="active" type="integer" title="D" hidden="true" />
+		<field name="m3" type="integer" title="M3" hidden="true" />
+	</fields>
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="id,cusid,cusname,meterid,metserial,val,deviceid,active">
+			<selectClause> <![CDATA[ 
+				id,cusid,cusname,meterid,metserial,val,deviceid,active ]]>
+			</selectClause>
+			<tableClause>
+				v_readerlistdevice_live
+			</tableClause>
+			<whereClause>
+                              <![CDATA[ 
+                              	 ($criteria.pcityid<0 or pcityid=$criteria.pcityid)
+                              ]]>
+			</whereClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

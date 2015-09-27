@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:id="@+id/iw_info"
+        android:layout_width="32px"
+        android:layout_height="32px"
+        android:src="@drawable/person" />
+
+    <TextView
+        android:id="@+id/m_iw_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black" />
+
+    <ImageButton
+        android:id="@+id/iw_arrow_left"
+        android:layout_width="32px"
+        android:layout_height="32px"
+        android:src="@drawable/arrow_left" />
+
+    <ImageButton
+        android:id="@+id/iw_arrow_right"
+        android:layout_width="32px"
+        android:layout_height="32px"
+        android:src="@drawable/arrow_right" />
+
+    <ImageButton
+        android:id="@+id/iw_arrow_up"
+        android:layout_width="32px"
+        android:layout_height="32px"
+        android:src="@drawable/arrow_up" />
+
+    <ImageButton
+        android:id="@+id/iw_arrow_down"
+        android:layout_width="32px"
+        android:layout_height="32px"
+        android:src="@drawable/arrow_down" />
+
+    <ImageButton
+        android:id="@+id/iw_remove"
+        android:layout_width="32px"
+        android:layout_height="32px"
+        android:src="@drawable/remove" />
+
+</LinearLayout>

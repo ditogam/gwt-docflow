@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="CustShortDS" serverType="sql" tableName="feeder.v_customer_full">
+	<fields>
+		<field name="cusid" type="integer" title="Customer ID"
+			primaryKey="true" width="100" />
+		<field name="cusname" type="text" title="Customer Name" width="100" />
+		<field name="raion" type="text" title="Sub Region" width="100" />
+		<field name="cityname" type="text" title="City" width="100" />
+		<field name="streetname" type="text" title="Street" width="100" />
+		<field name="home" type="text" title="Home" width="50" />
+		<field name="flat" type="text" title="Flat" width="50" />
+		<field name="zone" type="double" title="Zone" width="100" />
+		<field name="meterid" type="integer" title="Zone" width="100" />
+		<field name="metserial" type="integer" title="Zone" width="100" />
+	</fields>
+	<serverObject lookupStyle="new"
+		className="com.docflow.server.db.CusShortCustomDMI" />
+</DataSource>

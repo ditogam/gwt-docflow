@@ -1,0 +1,48 @@
+<DataSource ID="BankLiveDS" serverType="sql" tableName="v_banklive">
+	<fields>
+		<field name="bankid" type="integer" title="Bankid" primaryKey="true" />
+		<field name="bname" type="text" title="Bank Name" />
+		<field name="cnt" type="integer" title="Count" />
+		<field name="sm" type="double" title="Sum" />
+		<field name="countless50" type="integer" title="Count less 50" />
+		<field name="sumless50" type="double" title="Sum less 50" />
+		<field name="countgreater50" type="integer" title="Count greater 50 " />
+		<field name="sumgreater50" type="double" title="Sum greater 50" />
+	</fields>
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="bankid,bname,cnt,sm,countless50,sumless50,countgreater50,sumgreater50">
+			<selectClause> <![CDATA[ 
+				bankid,bname,count(*) cnt,sum(amount) sm,sum(case
+				when amount<50 then
+				1 end)
+				countless50,sum(case when amount<50 then
+				amount end)
+				sumless50,sum(case when amount>=50 then
+				1end)countgreater50,sum(case
+				when amount>=50then amount
+				end)sumgreater50 ]]>
+			</selectClause>
+			<tableClause>
+				v_banklive_full
+			</tableClause>
+			<whereClause>
+                              <![CDATA[ 
+                              banktime>=$criteria.diStart
+                              and
+                              banktime<$criteria.diEnd
+                              #if($criteria.custypeid)
+                               	and ($criteria.custypeid<0 or custypeid=$criteria.custypeid)
+                              #end
+                             
+                              #if($criteria.siRegion) 
+                              	and
+                              	($criteria.siRegion<0 or ppcityid=$criteria.siRegion)
+                              #end
+                              ]]>
+			</whereClause>
+			<groupClause>bankid,userid,bname</groupClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tables>
+
+    <Table
+        geom_name="the_geom"
+        id_name="ppcityid"
+        maxZoom="-1"
+        minZoom="10"
+        srid="4326"
+        table_name="map_info"
+        tags_name="'natural='||hex('water')" />
+
+    <Table
+        geom_name="the_geom"
+        id_name="id"
+        maxZoom="-1"
+        minZoom="10"
+        srid="4326"
+        table_name="settlements"
+        tags_name="'natural='||hex('beach')" />
+
+    <Table
+        geom_name="the_geom"
+        id_name="ruid"
+        maxZoom="-1"
+        minZoom="15"
+        srid="4326"
+        table_name="roads"
+        tags_name="'highway='||hex('secondary')||';name='||hex(ifnull(rname,''))"
+        tags_name1="'highway='||hex('secondary')||';name='||hex(ifnull(rname,'')||ruid)" />
+
+    <Table
+        geom_name="the_geom"
+        id_name="buid"
+        maxZoom="-1"
+        minZoom="15"
+        srid="4326"
+        table_name="buildings"
+        tags_name="case when has_customer=0 then 'emptybuilding' else 'nonemptybuilding' end|| '='||hex('bld')" />
+
+</Tables>

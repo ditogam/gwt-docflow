@@ -1,0 +1,1 @@
+<HTML><BODY><SCRIPT>window.location.replace("adminConsole.aspx?target=dsImporter");</SCRIPT></BODY></HTML>

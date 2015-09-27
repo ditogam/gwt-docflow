@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="CustomerDS" serverType="sql" tableName="v_customer_full">
+    <fields>
+	<field name="cusid" type="integer" title="Customer ID"
+	    primaryKey="true" width="100" />
+	<field name="cusname" type="text" title="Customer Name" width="100" />
+	<field name="raion" type="text" title="Sub Region" width="100" />
+	<field name="cityname" type="text" title="City" width="100" />
+	<field name="streetname" type="text" title="Street" width="100" />
+	<field name="home" type="text" title="Home" width="50" />
+	<field name="flat" type="text" title="Flat" width="50" />
+	<field name="zone" type="double" title="Zone" width="100" />
+	<field name="meterid" type="integer" title="Zone" width="100" />
+	<field name="metserial" type="integer" title="Zone" width="100" />
+	<field name="regionid" type="integer" title="Zone" width="100" />
+	<field name="subregionid" type="integer" title="Zone" width="100" />
+	<field name="has_building" type="boolean" title="hph_rcn"
+	    sqlStorageStrategy="integer" />
+	<field name="phone" type="text" title="Phone" width="100" />
+    </fields>
+    <serverObject lookupStyle="new"
+	className="com.docflow.server.db.CustomerCustomDMI" />
+    <operationBindings>
+	<!-- FETCH -->
+	<operationBinding operationType="fetch"
+	    customFields="cusid,cusname,raion,cityname,streetname,home,flat,zone,meterid,metserial,regionid,subregionid,phone">
+	    <selectClause> <![CDATA[
+	        #if($criteria.only_building_ids)
+	    	--array_to_string(array_agg(bbcm.building_id), ',')  cusname
+	    	building_id cusname
+	        #else 
+		    v_customer_full.cusid,
+			#if($criteria.building_id)
+			    '<a target="_blank" href="../gassreportsout/report_user.jsp?in_vsp=1&in_cs=-1&in_cusid='::text ||
+				    v_customer_full.cusid|| '&in_incusid='::text || v_customer_full.cusid||'">'||cusname||'</a>'
+			#else
+			    v_customer_full.cusname
+			#end 
+			 
+			#if($criteria.parent_metters) ||' - ' ||v_customer_full.cusid #end 
+		    cusname,v_customer_full.raion,v_customer_full.cityname,v_customer_full.streetname,v_customer_full.home,v_customer_full.flat,v_customer_full.zone,
+		    v_customer_full.regionid,v_customer_full.subregionid,phone
+		    #if($criteria.hasbuilding) , 
+			--(select case when count(1)>0 then 1 else 0 end  from maps.building_to_customers bbc where bbc.cusid=v_customer_full.cusid) 
+			case when building_id is not null then 1 else 0 end
+			has_building 
+		    #end
+		#end
+		
+		 ]]>
+	    </selectClause>
+	    <tableClause>
+		v_customer_full
+		<!--#if($criteria.only_building_ids || $criteria.for_building) ,maps.building_to_customers 
+		    bbcm #end -->
+	    </tableClause>
+	    <whereClause>
+		<![CDATA[
+		    #if($criteria.only_building_ids || $criteria.for_building)
+			--bbcm.cusid=v_customer_full.cusid
+			v_customer_full.building_id is not null
+			and 
+		    #end
+		    #if($criteria.phone)
+			(v_customer_full.phone=$criteria.phone)
+			and
+		    #end
+		    #if($criteria.cus_status_active || $criteria.hasbuilding)
+			(v_customer_full.cusstatusid>0 and v_customer_full.custypeid<>-100)
+			and
+		    #end
+		    #if($criteria.zone)
+			(v_customer_full.zone=$criteria.zone)
+			and
+		    #end
+		    #if($criteria.cus_name)
+		    
+			(
+			    1!=1
+			#foreach( $cus_nm in $criteria.cus_name.split(" ") )
+				or
+				v_customer_full.cusname like '%'||$criteria.cus_name||'%'
+			#end
+			)
+			and
+		    #end
+		    #if($criteria.parent_metters)
+		       v_customer_full.custypeid=-100
+		       and (
+		       #if($criteria.ccusid)
+		    	(v_customer_full.cusid=$criteria.ccusid)
+				    or
+		       #else
+				    
+				    1=1 and
+		       #end	
+			    not exists(select 1 from maps.district_meter_mapping bmm where bmm.cusid=v_customer_full.cusid)
+		    	    )
+		       and
+		    #end
+		    #if($criteria.cusid)
+			(v_customer_full.cusid=$criteria.cusid)
+			and
+		    #end
+		    #if($criteria.streetid)
+			($criteria.streetid<0 or v_customer_full.streetid=$criteria.streetid)
+			and
+		    #end
+		    #if($criteria.custypeid)
+			($criteria.custypeid<0 or v_customer_full.custypeid=$criteria.custypeid)
+			and
+		    #end
+		    #if($criteria.cityid)
+			(v_customer_full.cityid=$criteria.cityid)
+			and
+		    #end
+		    #if($criteria.regionid)
+			(v_customer_full.regionid=$criteria.regionid)
+			and
+		    #end
+		    #if($criteria.subregionid)
+			(v_customer_full.subregionid=$criteria.subregionid
+			    #if($criteria.building_free)
+				or v_customer_full.subregionid in (select real_subregion_id from maps.subregion_mappings sm where sm.subregion_id=$criteria.subregionid)
+			    #end
+			)
+			and
+		    #end
+		    
+		    #if($criteria.building_id)
+			 v_customer_full.building_id=$criteria.building_id
+			and
+		    #end
+		    #if($criteria.building_free)
+			#if($criteria.buildNum)
+			    v_customer_full.home=$criteria.buildNum
+			    and
+			#end
+			#if($criteria.not_cust)
+			    #foreach( $cus_id in $criteria.not_cust.split(",") )
+				(v_customer_full.cusid!=$cus_id)
+				and
+			    #end
+			#end
+			(
+			    #if($criteria.removed_cust&&$criteria.removed_cust.trim().length()>0)
+				#foreach( $rcus_id in $criteria.removed_cust.trim().split(",") )
+				    (v_customer_full.cusid!=$rcus_id)
+				    or
+				#end
+			    #end
+			    1!=1 or v_customer_full.building_id is null
+			    --not exists (select 1 from maps.building_to_customers bc where v_customer_full.cusid=bc.cusid)
+			) and
+		    #end
+		    
+		    #if($criteria.for_building)
+			--exists (select 1 from maps.building_to_customers bc where v_customer_full.cusid=bc.cusid)
+			 v_customer_full.building_id is not null
+		      and
+		    #end
+		    
+		    #if($criteria.coef)
+			exists(select 1 from meter m  
+			where v_customer_full.cusid=m.cusid and m.mstatusid>0 
+			    and m.mtypeid not in  (select mt.mtypeid from zzz_mtype mt) )
+			and
+		    #end
+		    1=1
+		]]>
+	    </whereClause>
+
+	</operationBinding>
+
+	<operationBinding operationType="fetch" operationId="getSubregions">
+	    <selectClause> <![CDATA[ 
+		    'regid='||ppcityid||' and raiid in ('|| array_to_string(array_agg(pcityid), ',')||')' cusname,
+		    array_to_string(array_agg(pcityid), ',') cityname
+		]]>
+	    </selectClause>
+	    <tableClause>
+		pcity s
+	    </tableClause>
+	    <whereClause><![CDATA[
+	        ppcityid=$criteria.ppcityid  
+	        #if($criteria.pcityid)
+			and pcityid=$criteria.pcityid 
+		#end
+		]]>
+	    </whereClause>
+	    <groupClause>ppcityid</groupClause>
+	</operationBinding>
+
+    </operationBindings>
+</DataSource>

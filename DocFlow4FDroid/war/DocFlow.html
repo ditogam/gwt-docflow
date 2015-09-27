@@ -1,0 +1,90 @@
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!--                                                               -->
+<!-- Consider inlining CSS to reduce the number of requested files -->
+<!--                                                               -->
+<link type="text/css" rel="stylesheet" href="DocFlow.css">
+
+<!--                                           -->
+<!-- Any title is fine                         -->
+<!--                                           -->
+<title>DocFlow</title>
+<!--                                           -->
+<!-- This script loads your compiled module.   -->
+<!-- If you add any GWT meta tags, they must   -->
+<!-- be added before this line.                -->
+<!--                                           -->
+<script type="text/javascript">
+	window.isc_expirationOff=true;
+	var isomorphicDir = "docflow/sc/";
+</script>
+
+<script src=docflow/sc/modules/ISC_Core.js?isc_version=9.1.js></script>
+<script src=docflow/sc/modules/ISC_Foundation.js?isc_version=9.1.js></script>
+<script src=docflow/sc/modules/ISC_Containers.js?isc_version=9.1.js></script>
+<script src=docflow/sc/modules/ISC_Grids.js?isc_version=9.1.js></script>
+<script src=docflow/sc/modules/ISC_Forms.js?isc_version=9.1.js></script>
+<script src=docflow/sc/modules/ISC_DataBinding.js?isc_version=9.1.js></script>
+
+
+<script type="text/javascript" language="javascript"
+	src="docflow/docflow.nocache.js"></script>
+<script type="text/javascript" language="javascript"
+	src="sc/DataSourceLoader?dataSource=ImageDBDS,CustShortDS,BuildingsDS,ImageDS,JobPositionDS,CustomerDS,Responcibility_TypeDS,StructureDS,ResponcibilitiesDS,ZoneDS,PersonEducationDS,ClassifierDS,BankLiveDS,DocumentShortDS,PersonDS,HRStructureDS,BankLiveDetailsDS,DayCloseDS,DayCloseRegionDS,DayCloseDetailsDS,ReaderListDeviceDS,PersonShortDS"></script>
+<script type="text/javascript" language="javascript"
+	src="sc/DataSourceLoader?dataSource=MeterDeviceDS,MDScheduleDS,MeterDeviceConfigDS,MeterDeviceResultDS,ReaderListValsDS,ReaderListDescDS,DocumentThreadDS"></script>
+
+<script type="text/javascript" language="javascript"
+	src="sc/DataSourceLoader?dataSource=GetHttpReqvestDS,BuildingCustomerDS,CustomerShortDS,CustShortMeterDS,DBCDS_COMMON,PlombUsersDS,UserPlombsDS,GasMonitorTemplateDS,DocReplicaDS,Demage_DescriptionDS,Demage_Description_FilesDS,PipeLineDS"></script>
+
+
+<script src="OpenLayers.js" type="text/javascript"></script>
+<script src="OSM.js" type="text/javascript"></script>
+<script src="keyboardutils.js" type="text/javascript"></script>
+<script src="callback.js" type="text/javascript"></script>
+<script src="test_1.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	
+</script>
+<script
+	src='https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyB-M5fDTv_-Cr4PK_Fw3-KDmn7iNCm6Nfo&sensor=false'></script>
+<script type="text/javascript" language="javascript" src="common.js"></script>
+<script type="text/javascript">
+	var gsat = new OpenLayers.Layer.Google("Google Satellite", {
+		type : google.maps.MapTypeId.SATELLITE,
+		numZoomLevels : 25,
+		isBaseLayer : false,
+		sphericalMercator : true,
+		visibility : false,
+		googlel : true,
+		op : googleOp
+	}
+	// used to be {type: G_SATELLITE_MAP, numZoomLevels: 22}
+	);
+
+	window.onerror = function(msg, url, line) {
+		// You can view the information in an alert to see things working
+		// like so:
+		//alert("Error: " + msg + "\nurl: " + url + "\nline #: " + line);
+
+		// TODO: Report this error via ajax so you can keep track
+		//       of what pages have JS issues
+
+		var suppressErrorAlert = true;
+		// If you return true, then error alerts (like in older versions of 
+		// Internet Explorer) will be suppressed.
+		return suppressErrorAlert;
+	};
+</script>
+</head>
+<body oncontextmenu="return false;">
+
+	<!-- history support -->
+	<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
+		style="position: absolute; width: 0; height: 0; border: 0"></iframe>
+</body>
+</html>

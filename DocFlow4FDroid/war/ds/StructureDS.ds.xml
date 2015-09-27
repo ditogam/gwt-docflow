@@ -1,0 +1,29 @@
+<DataSource ID="StructureDS" serverType="sql" tableName="structure"
+	dbName="HR">
+	<fields>
+		<field name="id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" />
+		<field name="structure_name" type="text" title="Name111" />
+		<field name="parent_department_id" type="integer" title="Name111" />
+		<field name="job_description" type="text" title="ID" />
+		<field name="max_substructures_count" type="integer" title="ID" />
+		<field name="max_position_count" type="integer" title="ID" />
+		<field name="structure_name_id" type="integer" title="ID" />
+		<field name="job_description_id" type="integer" title="ID" />
+	</fields>
+
+
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="id,structure_name,parent_department_id,job_description,max_substructures_count,max_position_count,structure_name_id,job_description_id">
+			<selectClause> <![CDATA[ 
+				id,structure_name,parent_department_id,job_description,max_substructures_count,max_position_count,structure_name_id,job_description_id ]]>
+			</selectClause>
+			<tableClause>
+				structure
+			</tableClause>
+		</operationBinding>
+	</operationBindings>
+
+</DataSource>

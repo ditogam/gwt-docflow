@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="PersonDS" serverType="sql" tableName="person"
+	dbName="HR">
+	<fields>
+		<field name="person_id" type="sequence" title="ID" primaryKey="true"
+			hidden="true" />
+		<field name="person_last_name" type="text" title="Name111" />
+		<field name="person_first_name" type="text" title="Name111" />
+		<field name="person_middle_name" type="text" title="Name111" />
+		<field name="person_birth_date" type="date" title="Name111" />
+		<field name="person_sex" type="integer" title="Name111" />
+		<field name="person_nationality" type="integer" title="Name111" />
+		<field name="person_nationality_other" type="text" title="Name111" />
+		<field name="person_identity_no" type="text" title="Name111" />
+		<field name="person_address" type="text" title="Name111" />
+		<field name="person_merige_statuse" type="integer" title="Name111" />
+		<field name="person_family" type="text" title="Name111" />
+		<field name="person_picture" type="imageFile" title="Name111" />
+		<field name="picture_id" type="integer" title="Name111" />
+		<field name="person_last_name_id" type="integer" title="Name111" />
+		<field name="person_first_name_id" type="integer" title="Name111" />
+		<field name="person_address_tid" type="integer" title="Name111" />
+		<field name="person_family_id" type="integer" title="Name111" />
+		<field name="user_id" type="integer" title="Name111" />
+		<field name="person_middle_name_id" type="integer" title="Name111" />
+		<field name="initiator_id" type="integer" title="Name111" />
+		<field name="person_nationality_other_id" type="integer" title="Name111" />
+
+	</fields>
+
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch"
+			customFields="person_id,person_last_name,person_first_name,person_picture,
+			person_middle_name,person_birth_date,person_sex,person_nationality,person_nationality_other,person_identity_no,
+			person_address,person_merige_statuse,person_family,picture_id,person_last_name_id,person_first_name_id,
+			person_address_tid,person_family_id,user_id,person_middle_name_id,initiator_id,person_nationality_other_id">
+			<selectClause> <![CDATA[ 
+				getcaption(COALESCE(person_last_name_id,-1),#if($criteria.language_id) $criteria.language_id #elseif($values.language_id) $values.language_id #end -0,person_last_name) person_last_name,
+				getcaption(COALESCE(person_first_name_id,-1),#if($criteria.language_id) $criteria.language_id #elseif($values.language_id) $values.language_id #end -0,person_first_name) person_first_name,
+				person_picture,
+				getcaption(COALESCE(person_middle_name_id,-1),#if($criteria.language_id) $criteria.language_id #elseif($values.language_id) $values.language_id #end -0,person_middle_name) person_middle_name,
+				date(person_birth_date) person_birth_date,
+				person_sex,
+				person_nationality,
+				getcaption(COALESCE(person_nationality_other_id,-1),#if($criteria.language_id) $criteria.language_id #elseif($values.language_id) $values.language_id #end -0,person_nationality_other) person_nationality_other,
+				person_identity_no,
+				getcaption(COALESCE(person_address_tid,-1),#if($criteria.language_id) $criteria.language_id #elseif($values.language_id) $values.language_id #end -0,person_address) person_address,
+				person_merige_statuse,
+				getcaption(COALESCE(person_family_id,-1),#if($criteria.language_id) $criteria.language_id #elseif($values.language_id) $values.language_id #end -0,person_family) person_family,
+				picture_id,
+				person_last_name_id,
+				person_first_name_id,
+				person_address_tid,
+				person_family_id,
+				user_id,
+				person_middle_name_id,
+				initiator_id,
+				person_nationality_other_id
+					 ]]>
+			</selectClause>
+			<tableClause>
+				person
+			</tableClause>
+			<whereClause>
+				<![CDATA[ 
+					#if($criteria.person_id)
+						person_id=$criteria.person_id
+						and
+					#end
+					1=1
+				]]>
+			</whereClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="map"/>
+	<classpathentry kind="src" path="proj4j"/>
+	<classpathentry kind="src" path="doflowandroid"/>
+	<classpathentry including="com/common/db/DBClassMapping.java|com/common/shared/" kind="src" path="common"/>
+	<classpathentry excluding="com/googlecode/xremoting/core/servlet/XRemotingServlet.java" kind="src" path="xremoting"/>
+	<classpathentry kind="src" path="sqlite"/>
+	<classpathentry including="com/docflow/client/DocFlowService.java|com/docflow/server/db/DBMapping.java|com/docflow/shared/**" kind="src" path="docflow"/>
+	<classpathentry kind="src" path="docflowandroidimpl"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="src" path="gwt"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

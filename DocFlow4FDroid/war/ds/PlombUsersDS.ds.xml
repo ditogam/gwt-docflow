@@ -1,0 +1,6 @@
+<DataSource ID="PlombUsersDS" serverType="sql" tableName="feeder.v_plomb_users">
+	<fields>
+		<field name="userid" type="integer" title="userid" primaryKey="true" />
+		<field name="username" type="text" title="Bank Name" />
+	</fields>
+</DataSource>

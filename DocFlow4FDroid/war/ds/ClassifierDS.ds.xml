@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="ClassifierDS" serverType="sql" tableName="classifier"
+	dbName="HR">
+	<fields>
+		<field name="cl_type_id" type="integer" />
+		<field name="cl_id" type="integer" />
+		<field name="cl_name" type="text" title="Name111" />
+	</fields>
+</DataSource>

@@ -1,0 +1,54 @@
+<DataSource ID="DayCloseRegionDS" serverType="sql" tableName="v_dayclose">
+	<fields>
+		<field name="ppcityid" type="integer" title="#" hidden="true" />
+		<field name="ppcityname" type="text" title="Region" />
+		<field name="userid" type="integer" title="#" hidden="true"
+			primaryKey="true" />
+		<field name="username" type="text" title="Name" />
+		<field name="banktime" type="date" title="Date" />
+		<field name="cnt" type="integer" title="Count" />
+		<field name="samount" type="double" title="Amount" />
+		<field name="scc1" type="integer" title="A Count" />
+		<field name="amnt1sum" type="double" title="A Amount" />
+		<field name="btn" type="text" title="V" hidden="true" />
+		<field name="bankid" type="integer" title="bankid" hidden="true" />
+		<field name="bankdate" type="date" title="Date" hidden="true" />
+		<field name="acc_id" type="integer" title="bankid" hidden="true" />
+	</fields>
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch">
+			<selectClause> <![CDATA[ 
+				ppcityid,ppcityname,banktime,userid,username,
+				count(*) AS cnt, sum(amount) AS samount, sum(cc1) AS scc1, 
+				sum(amount1) AS amnt1sum, (ppcityid || ''::text)::character varying AS btn,bankid,date(banktime) as bankdate,acc_id ]]>
+			</selectClause>
+			<tableClause>
+				v_dayclose_full
+			</tableClause>
+			<whereClause>
+                              <![CDATA[ 
+                              ($criteria.bankid<0 or bankid=$criteria.bankid)
+                              #if($criteria.siRegion) 
+                              	and ($criteria.siRegion<0 or ppcityid=$criteria.siRegion)
+                              #end
+                              	and ($criteria.cbiUseDate=false or banktime=date($criteria.diStart))
+                                and acc_id=$criteria.acc_id
+                              ]]>
+			</whereClause>
+			<groupClause>ppcityid,ppcityname,banktime,userid,username,bankid,acc_id
+			</groupClause>
+			<orderClause>banktime,ppcityname</orderClause>
+		</operationBinding>
+		<operationBinding operationType="update"
+			serverMethod="update" allowMultiUpdate="true">
+			<serverObject lookupStyle="new"
+				className="com.docflow.server.db.FakeDBOperations" />
+		</operationBinding>
+		<operationBinding operationType="remove"
+			serverMethod="update" allowMultiUpdate="true">
+			<serverObject lookupStyle="new"
+				className="com.docflow.server.db.FakeDBOperations" />
+		</operationBinding>
+	</operationBindings>
+</DataSource>

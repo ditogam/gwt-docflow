@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//src/com/docflow/client/components/common/FieldDefinitionListValue.java=UTF-8
+encoding//src/com/docflow/client/components/common/FileUploadPanel.java=UTF-8
+encoding//src/com/docflow/client/components/hr/ImageUploadPanel.java=UTF-8
+encoding//src/com/docflow/client/components/hr/WAddEditStructure.java=UTF-8
+encoding//src/com/docflow/client/components/usermanager/PApplyGroups.java=UTF-8
+encoding//src/com/docflow/client/components/usermanager/PApplyPermitions.java=UTF-8
+encoding//src/com/docflow/client/components/usermanager/PGroups.java=UTF-8
+encoding//src/com/docflow/client/components/usermanager/PUsers.java=UTF-8
+encoding//src/com/docflow/client/components/usermanager/WAddEditUMObject.java=UTF-8
+encoding//src/com/docflow/server/ImageStore.java=UTF-8
+encoding//src/com/docflow/server/db/DocFlowDocumentGenerator.java=UTF-8

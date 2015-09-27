@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Socar Map</string>
+    <string name="test_db">/mnt/sdcard/socardb/socarmap.sqlite</string>
+    <string name="map_view">Map View</string>
+    <string name="map_view_description">Map Example: Tap on map in Italy to display region.</string>
+    <string name="browse_data">Browse Data</string>
+    <string name="browse_description">Step 3: Select \"Browse Data\" to view the contents of the test database.</string>
+    <string name="run_tests">Run Tests</string>
+    <string name="run_description">Step 2: Select \"Run Tests\" to verify basic functionality.</string>
+    <string name="install_to_external">External Storage</string>
+    <string name="install_to_application">Application Storage</string>
+    <string name="install_directions">Step 1: Select the location you would like to install the Spatialite test Database.\nNOTE: You only need to do this once.</string>
+    <string name="error_copy_failed">Failed to copy test database to requested location.  Check error log for more information.</string>
+    <string name="error_locate_failed">Unable to locate database file. Check error log for more information.</string>
+    <string name="first_fix_message">Got the first fix</string>
+    <string name="my_location">My Location</string>
+    <string name="enable_disable_zoom">Enable/Disable Zoom</string>
+    <string name="search">Search</string>
+    <string name="clear">Clear</string>
+    <string name="disable_enable_motion">disable/enable motion</string>
+    <string name="l_region">Region</string>
+    <string name="l_subregion">Subregion</string>
+    <string name="l_zone">Zone</string>
+    <string name="l_cusid">Cus_id</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_customer_search">Customer Search</string>
+    <string name="scan_customer_barcode">From barcode</string>
+    <string name="title_activity_customer_detail">Customer Detail</string>
+    <string name="map_manipulate">Manipulate</string>
+    <string name="building_select">Buildings</string>
+    <string name="cus_meter">Customer Metter</string>
+    <string name="distinct_meter">District Metter</string>
+
+</resources>

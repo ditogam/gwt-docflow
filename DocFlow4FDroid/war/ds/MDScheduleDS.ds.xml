@@ -1,0 +1,24 @@
+<DataSource ID="MDScheduleDS" serverType="sql"
+	tableName="corectors.v_schedule_table" dbName="MAP">
+	<fields>
+		<field name="sh_time" type="sequence" title="id" hidden="true"
+			primaryKey="true" />
+		<field name="sh_time_text" type="text" title="Time" />
+		<field name="default_selected" type="boolean" title="Selected" canEdit="true"/>
+
+	</fields>
+	<serverObject lookupStyle="new"
+		className="com.docflow.server.corector.CorectorDMI" />
+	<operationBindings>
+		<!-- FETCH -->
+		<operationBinding operationType="fetch" operationId="fetchMeterDeviceSchedule">
+			<selectClause> <![CDATA[ 
+					sh_time,sh_time_text,#if($criteria.meter_device_id) corectors.has_meter_shcedule($criteria.meter_device_id,sh_time) #else  default_selected #end default_selected
+				]]>
+			</selectClause>
+			<tableClause>
+				corectors.v_schedule_table sm
+			</tableClause>
+		</operationBinding>
+	</operationBindings>
+</DataSource>

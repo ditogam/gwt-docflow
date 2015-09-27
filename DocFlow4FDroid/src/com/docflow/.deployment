@@ -1,0 +1,5 @@
+#Wed Dec 21 19:55:59 GET 2011
+war.name=DocFlow.war
+compiler.style=OBFUSCATED
+server.path=/root/Documents
+compiler.memory.max=1024m

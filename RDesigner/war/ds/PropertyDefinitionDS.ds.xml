@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="PropertyDefinitionDS" dbName="DocFlow"
+	serverType="sql" tableName="dsdefinition.property_names">
+
+	<fields>
+
+		<field name="property_name" title="ID" type="text" width="100" />
+		<field name="property_type" title="ID" type="integer" width="100" />
+		<field name="valuetypes" title="ID" type="text" width="100" />
+
+	</fields>
+
+</DataSource>

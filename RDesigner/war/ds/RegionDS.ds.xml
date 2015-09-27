@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource ID="RegionDS" serverType="sql" tableName="ppcity">
+	<fields>
+		<field name="ppcityid" type="integer" title="Customer ID"
+			primaryKey="true" width="100" />
+		<field name="ppcityname" type="text" title="Customer Name" width="100" />
+	</fields>
+</DataSource>
