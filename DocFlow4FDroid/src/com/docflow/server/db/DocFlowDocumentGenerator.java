@@ -94,7 +94,7 @@ public class DocFlowDocumentGenerator {
 			row[0] = "" + d.getId();
 			row[1] = "" + d.getVersion_id();
 			row[2] = "" + d.getDoc_flow_num();
-			row[3] = "" + new Date(d.getTransaction_date());
+			row[3] = "" + new Date(d.getDoc_date());
 			row[4] = "" + d.getCust_id();
 			row[5] = "" + d.getCustomer_name();
 			row[6] = "" + d.getDoctype();
